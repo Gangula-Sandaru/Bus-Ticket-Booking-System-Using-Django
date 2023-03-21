@@ -1,0 +1,178 @@
+ {% extends 'Administration/base.html' %}
+{% load static %}
+{% block title %}
+    View Tickets
+{% endblock %}
+
+{% block link %}
+<script>
+
+
+    $(document).ready(function () {
+        {#$(".refun").click(function () {#}
+        {#        $("#refund_d").addClass('d-none')#}
+        {#        $(".loader_refund").removeClass('d-none')#}
+        {#    })#}
+
+
+        $('.refun').click(function() {
+          const buttonId = $(this).attr('id');
+          console.log(buttonId);
+          $('#refund_ticket').val(buttonId)
+        });
+    })
+</script>
+{% endblock %}
+
+{% block main %}
+{##}
+{#        <div class="col-md-6 grid-margin">#}
+{#                            <div class="container-fluid">#}
+{#                <form action="{%  url 'viewTicket' ticket_data.ticket_id %}" method="post">#}
+{#                    {% csrf_token %}#}
+{#                <div class="card text-center">#}
+{#                  <div class="card-body">#}
+{#                    <h4 class="card-title">Tickets Details</h4>#}
+{##}
+{#                          <img src="https://cdn.dribbble.com/users/418547/screenshots/3716301/drbl_1.gif">#}
+{#                        <address>#}
+{#                          <p class="font-weight-bold">Ticket information</p>#}
+{#                          <p> Name: </p>#}
+{#                          <p> Email:  </p>#}
+{#                          <p> Bus Number: </p>#}
+{#                          <p> Route No and Name: </p>#}
+{#                          <p> Invoice NO: </p>#}
+{#                          <p> Date and Time: </p>#}
+{#                          <p> Price: </p>#}
+{#                        </address>#}
+{##}
+{##}
+{#                        <address class="text-primary">#}
+{#                          <p class="font-weight-bold">  </p>#}
+{#                          <p class="font-weight-bold"> - </p>#}
+{#                          <p class="mb-2">{{ ticket_data.passengerID.emailaddr }} </p>#}
+{#                          <p class="mb-2"> {{ ticket_data.bus_plate_no }} </p>#}
+{#                          <p class="mb-2"> - </p>#}
+{#                          <p class="mb-2">{{ ticket_data.invoiceno }} </p>#}
+{#                          <p class="mb-2">{{ ticket_data.c_time }} </p>#}
+{#                          <p class="font-weight-bold"> {{ ticket_data.ticket_expire_date }} </p>#}
+{#                          <p class="font-weight-bold">Rs {{ ticket_data.total_amount }} </p>#}
+{#                          <p> <img src="{{ ticket_data.ticket_qr_code.url }}"></p>#}
+{#                        </address>#}
+{##}
+{##}
+{#                        <div class="row">#}
+{#                            <div class="col">#}
+{#                                <button type="submit" class="btn btn-primary">Refund</button>#}
+{##}
+{#                            </div>#}
+{#                            <div class="col">#}
+{#                                <a type="submit" href="{% url 'ticket' %}" class="btn btn-primary">Cancel</a>#}
+{#                            </div>#}
+{#                      </div>#}
+{#                    </div>#}
+{##}
+{#                  </div>#}
+{##}
+{#                    </form>#}
+{#                </div>#}
+{#              </div>#}
+
+
+     <div class="container-fluid " id="refund_d">
+        <div class="text-center">
+            <img src="{{ ticket_data.ticket_qr_code.url }}">
+{#            <img src="https://cdn.dribbble.com/users/418547/screenshots/3716301/drbl_1.gif">#}
+        </div>
+        <div class="text-center">
+        <h1>Invoice number: {{ ticket_data.invoiceno }}</h1>
+        <p class="lead">Ticket Information.</p>
+
+         <table class="table">
+             <tr class="row">
+                 <th class="col-2"></th>
+                 <th class="col-5">Ticket Info  </th>
+                 <th class="col-5">Refund Info</th>
+             </tr>
+             <tr class="row">
+
+                 <td class="col-2 text-start">Bus Number:  </td>
+                 <td class="col-5">{{ ticket_data.bus_plate_no }}</td>
+                 <td class="col-5">{{ ticket_data.bus_plate_no }}</td>
+             </tr>
+             <tr class="row">
+                 <td class="col-2 text-start">National Identity Card No: </td>
+                 <td class="col-5">{{ ticket_data.passengerID.nic }}</td>
+                 <td class="col-5">{{ ticket_data.passengerID.nic }}</td>
+             </tr>
+             <tr class="row">
+                 <td class="col-2 text-start">Email Address: </td>
+                 <td class="col-5">{{ ticket_data.passengerID.emailaddr }}</td>
+                 <td class="col-5">{{ ticket_data.passengerID.emailaddr }}</td>
+
+             </tr>
+             <tr class="row">
+                 <td class="col-2 text-start">Total Amount: </td>
+                 <td class="col-5">Rs. {{ ticket_data.total_amount }}</td>
+                 <td class="col-5">Rs. {{ reduce }}</td>
+             </tr>
+             <tr class="row">
+                 <td class="col-2 text-start">Issued Info: </td>
+                 <td class="col-5"> Issued Date and time: {{ ticket_data.c_time }}</td>
+
+                 <td class="col-5">Expire Date and time: {{ ticket_data.ticket_expire_date }}</td>
+             </tr>
+         </table>
+
+            <div class="p-5">
+                <a href="{% url 'older_ticket_details' %}" class="p-3">Go back to Ticket Details</a>
+                <button type="button" class="btn btn-outline-danger btn-sm align-center "  id="{{ ticket_data.ticket_id }}" data-toggle="modal" data-target="#refund">Make Refund</button>
+            </div>
+        </div>
+
+
+
+    </div>
+                        <div class="modal fade" id="refund" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-sm">
+                        <div class="modal-content p-3">
+                            <form method="post" action="">
+                                {% csrf_token %}
+                              <p class="display-1 text-center"><i class="bi bi-exclamation-triangle-fill"></i></p>
+                                <p class="h4 text-center display-4">Are you sure?  </p>
+                                <p class="h6 small text-center" style="color: #C1C1C1;">Do you Really want to refund this ticket? <span id="bus_id"> </span> <br> This process can't be undone. <span id="bus_id"> </span> </p>
+                            <div class="row">
+{#                                <input name="del_val" type="hidden">#}
+                                {{ form.refund_ticket }}
+                                <div class="col-6">
+                                    <button name="sub" type="submit" class="btn btn-outline-danger refun">Yes</button>
+
+                                </div>
+                                <div class="col-6">
+                                    <button name="cancel" type="button"  data-dismiss="modal" class="btn btn-outline-primary">No</button>
+                                </div>
+                        </div>
+                                </form>
+
+                            </div>
+                        </div>
+                      </div>
+     <div class="loader_refund d-none">
+            <img src="https://cdn.dribbble.com/users/418547/screenshots/3716301/drbl_1.gif" width="300px" height="200px">
+        </div>
+
+{% endblock %}
+
+{% block js %}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+

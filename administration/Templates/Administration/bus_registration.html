@@ -1,0 +1,158 @@
+{% extends 'Administration/base.html' %}
+
+{% load static %}
+
+{% block title %}
+{% endblock %}
+
+{% block link %}
+    <script>
+              $(document).ready(function () {
+              $(".anima").click(function () {
+                {#$(".mail_form").hide()#}
+                $("#visble").addClass('d-none')
+                {#$(".load-animation").show()#}
+                 $(".load-animation").removeClass('d-none')
+            })
+          })
+    </script>
+{% endblock %}
+
+{% block main %}
+    <div class="main-panel">
+     <div class="container-scroller">
+      <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="content-wrapper d-flex align-items-center auth">
+          <div class="row flex-grow">
+            <div class="col-lg-5  mx-auto ">
+              <div class="auth-form-light text-left p-5 border-top border-4 border-dark " id="visble">
+                <div class="brand-logo d-flexd-none">
+                    <div class="col">
+                        <p class="display-3">Bus Registration.</p>
+                    </div>
+                    <div class="col text-end">
+                        <p> <img  src="https://t3.ftcdn.net/jpg/02/16/31/62/360_F_216316293_2Fn0vpWVzP6k7vPG6yY3wmSgobADmsUe.jpg"> </p>
+                    </div>
+
+
+                </div>
+                  <div class="card ">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                             </div>
+                         {% endfor %}
+                    {% endif %}
+
+
+                 <form class="forms-sample" method="post" action="{% url 'bus registration' %}">
+                 {% csrf_token %}
+                <h6 class="font-weight-light">Please fill this form</h6>
+                      <div class="form-group mt-4">
+{#                        <label for="exampleInputName1">Bus Plate Number: </label>#}
+{#                        <input type="text" class="form-control" id="exampleInputName1" placeholder="Name">#}
+                          {{ busfrom.bus_plate_no }}
+                            <p style="font-size: 13px;"> please enter bus register number.</p>
+                          {% for error in busfrom.bus_plate_no.errors %}
+                                <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 13px;">{{ error }}</p>
+                          {% endfor %}
+                </div>
+                <div class="form-group">
+{#                        <label for="exampleInputEmail3">Driver name: </label>#}
+{#                        <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">#}
+                          {{ busfrom.driver_name }}
+                        <p style="font-size: 13px;"> please enter driver name here</p>
+                          {% for error in busfrom.driver_name.errors %}
+                                <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 13px;">{{ error }}</p>
+                          {% endfor %}
+                      </div>
+
+                <div class="form-group">
+{#                        <label for="exampleInputEmail3">No Of Seat: </label>#}
+{#                        <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">#}
+                          {{ busfrom.no_of_seat }}
+                            <p style="font-size: 13px;"> please enter only 2 numbers here</p>
+                            {% for error in busfrom.no_of_seat.errors %}
+                                <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 13px;">{{ error }}</p>
+                          {% endfor %}
+                      </div>
+
+                  <div class="form-group">
+                        <label for="exampleInputEmail3">Vehicle Status: </label>
+{#                        <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">#}
+                          {{ busfrom.vehicle_status }}
+                            <p style="font-size: 13px;"> select whether the bus is available or not</p>
+                            {% for error in busfrom.vehicle_status.errors %}
+                                <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 13px;">{{ error }}</p>
+                          {% endfor %}
+                      </div>
+                 <div class="form-group">
+{#                        <label for="exampleInputEmail3">Contact No: </label>#}
+{#                        <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">#}
+                          {{ busfrom.contact_no }}
+                        <p style="font-size: 13px;"> please enter bus contact number (Ex: xxx-xxxxxxx)</p>
+                            {% for error in busfrom.contact_no.errors %}
+                                <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 13px;">{{ error }}</p>
+                          {% endfor %}
+                      </div>
+                        <div class="form-group">
+{#                        <label for="exampleInputEmail3">Other Details: </label>#}
+{#                        <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">#}
+                          {{ busfrom.other_details }}
+                            <p style="font-size: 13px;"> Enter any information about the bus.</p>
+{#                            {% for error in busfrom.other_details.errors %}#}
+{#                                <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 15px;">{{ error }}</p>#}
+{#                          {% endfor %}#}
+                      </div>
+
+                  <div class="mt-3">
+                      <div class="col">
+{#                      <button class="btn btn-light me-2">Cancel</button>#}
+                          </div>
+                      <div class="col text-end ">
+{#                      <button class="btn btn-light me-2 mr-5">Cancel</button>#}
+
+                     <button type="submit" class="btn btn-gradient-primary me-2 anima">Next to add routes</button>
+                          </div>
+                  </div>
+                 <div class="text-center pt-3">
+                     <label class="form-check-label pt-3 text-center" for="agree" style="font-size: 13px;">QuickBooking.lk <a href="#"> privacy policy </a> and <a href="#">terms and conditions</a></label>
+                </div>
+                 </form>
+                  </div>
+                </div>
+                    <div class="bg-white p-5 load-animation d-none" style="width: 500px; height: 500px; text-align: center;margin: auto">
+                        <div style=" text-align: center">
+                            <img src="https://cdn.dribbble.com/users/3593902/screenshots/8826233/media/10d04bc937cc65568fd00500d8ae4417.gif" style="height: 200px; width: 300px">
+                        </div>
+
+                        <div class="">
+                        <div style="text-align: center">
+                            <img src="https://i.pinimg.com/originals/24/07/b5/2407b512f6f2eec61cd2f3136242a025.gif" style="height: 180px; width: 280px">
+                            <p class="display-5">Processing...</p>
+
+                        </div>
+
+            </div>
+
+          </div>
+
+
+              </div>
+            </div>
+          </div>
+
+
+
+
+        </div>
+        <!-- content-wrapper ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+
+{% endblock %}
+
+{% block js %}
+{% endblock %}

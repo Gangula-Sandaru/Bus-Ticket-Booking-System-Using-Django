@@ -1,0 +1,162 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    Time Table
+{% endblock %}
+
+{% block link %}
+    {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/about_us.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'styles/about_us_responsive.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="super_container">
+    	<div class="home">
+		<div class="parallax_background parallax-window " data-parallax="scroll" data-image-src="https://www.setra-bus.com/content/dam/sbo/markets/common/models/cc-hd-models/images/teaser/EB29590-CC-HD-teaser-home-01.jpg" data-speed="0.8"></div>
+		<div class="home_container">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<div class="home_content text-center">
+							<div class="home_title"><h1>About us</h1></div>
+							<div class="home_text"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Search Box -->
+
+	<div class="search_box">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="search_box_container d-flex flex-row align-items-center justify-content-start">
+						<div class="search_form_container">
+							<form action="{% url 'time table' %}" id="search_form" class="search_form" method="post">
+                                {% csrf_token %}
+								<div class="d-flex flex-lg-row flex-column align-items-center justify-content-start">
+									<ul class="search_form_list d-flex flex-row align-items-center justify-content-start flex-wrap">
+
+
+										<li>
+                                            <input type="text" class="search_dropdown d-flex flex-row align-items-center justify-content-start" name="start_location" placeholder="  Departure Location">
+										</li>
+										<li>
+											<input type="text" class="search_dropdown d-flex flex-row align-items-center justify-content-start" name="end_location" placeholder="  Arrival Location">
+
+										</li>
+										<li>
+											<input type="date" class="search_dropdown d-flex flex-row align-items-center justify-content-start" name="date"  placeholder="  Date">
+
+										</li>
+										<li>
+											<input type="time" class="search_dropdown d-flex flex-row align-items-center justify-content-start"  name="route_time" placeholder="  Time">
+
+										</li>
+										<li>
+											<input type="text" class="search_dropdown d-flex flex-row align-items-start" placeholder="Route no (Optional)" name="route">
+
+										</li>
+									</ul>
+									<input class="search_button" type="submit" name="search" value="Search">
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="intro_right intro">
+		<div class="container">
+			<div class="row row-xl-eq-height">
+
+				<!-- Intro Image -->
+				<div class="col-xl-6">
+					<div class="intro_image">
+						<div class="background_image intro_image_background" style="background-image:url(https://sudoestetransportes.com.br/cdn/espaco-do-busologo/download/1920x1080-wallpaper-sudoeste-onibus.jpg)"></div>
+					</div>
+				</div>
+
+				<!-- Intro Right Content -->
+				<div class="col-xl-6 intro_right_col">
+					<div class="intro_right_content">
+						<div class="section_title_container text-center">
+							<div class="section_title"><h1>Welcome to the our Company.</h1></div>
+							<div class="section_text">Focused an exellence for our clients,we are well established,with a reprutation for great serve and a high-quality finish.</div>
+						</div>
+						<div class="intro_right_text text-center">Transport management system is now far more sophisticated than it was a decade ago, but also it has improved a lot with the advanced technology. We can proudly say that our web site is also one of the greatest achievement that has occurred due to the advanced technology that changer day by day.<br>
+                            Our website is designed to select a suitable mode of transport daily. Public could select to bus or taxi.  The help of this website passengers can easily check the scheduled timetables of each option, which will indicate the departure and arrival time of a particular bus or any other way of transportation. This would be very convenience to long distance travel services.<br>
+                            Also our web site shows the prices off all tickets you selected, which would be very comfortable for passengers to plan their journey according to their budget before even stopping into the taxi or bus. Furthermore it provides the online payment method.<br>
+                            As a conclusion we would like to mention that the main aim of this website is to make public life easier and comfortable. As a developing nation our website would help the public to experience the recent changes and improvement of technology without stuck in traditional ways. </div>
+						<div class="sig text-center">
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+    <div class="border"></div>
+
+	<div class="intro_left intro">
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-6 order-xl-1 order-2">
+					<div class="intro_left_content">
+						<div class="section_title_container text-center">
+							<div class="section_title"><h1>Amazing Facilities</h1></div>
+							<div class="section_text">We offer many facilities to the passenger such as Wifi, comfortable seats, Safety. we are very welcome to ride with your desire location. </div>
+						</div>
+						<div class="row icon_box_row">
+							<div class="col-lg-4">
+								<div class="icon_box text-center">
+									<div class="icon_box_title"><h3> Wifi</h3></div>
+									<div class="icon_box_text">
+										<p>In vitae nisi aliquam, scelerisque leo a, volutpat sem. Vivamus rutrum.</p>
+									</div>
+								</div>
+							</div>
+
+							<!-- Icon Box -->
+							<div class="col-lg-4">
+								<div class="icon_box text-center">
+									<div class="icon_box_title"><h3>Comfortable Seats</h3></div>
+									<div class="icon_box_text">
+										<p>Maecenas sollicitudin est in libero pretium interdum.In vitae nisi.</p>
+									</div>
+								</div>
+							</div>
+
+							<!-- Icon Box -->
+							<div class="col-lg-4">
+								<div class="icon_box text-center">
+									<div class="icon_box_title"><h3>Safety</h3></div>
+									<div class="icon_box_text">
+										<p>In vitae nisi aliquam, scelerisque leo a, volutpat sem. Vivamus rutrum.</p>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+				<div class="col-xl-6 order-xl-2 order-1">
+					<div class="intro_image">
+						<div class="background_image intro_image_background" style="background-image:url(https://upload.wikimedia.org/wikipedia/commons/e/eb/UEFA_Euro_2020_-_Swedish_team_bus.jpg)"></div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

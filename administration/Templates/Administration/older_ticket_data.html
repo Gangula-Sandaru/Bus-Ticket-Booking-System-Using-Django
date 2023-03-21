@@ -1,0 +1,190 @@
+{% extends 'Administration/base.html' %}
+{% block Title %}
+    News and Updates
+{% endblock %}
+{% load  static %}
+{% block link %}
+ <link rel="stylesheet" href="{% static 'style/card_style.css' %}">
+{% endblock %}
+
+{% block main %}
+              <div class="col grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+
+                            <div class="container">
+                                <div class="row">
+                                                               <div class="col-md-4 col-xl-3">
+                                        <div class="card bg-c-green order-card">
+                                            <div class="card-block">
+                                                <h6 class="m-b-20 text-center">All Tickets</h6>
+                                                <h2 class="text-right text-center"><i class="fa fa-rocket f-left"></i><span>{{ total }}</span></h2>
+                                                <p class="m-b-0 text-center">Shows the total Tickets of the system.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-xl-3">
+                                        <div class="card bg-c-blue order-card">
+{#                                            <div class="card-block">#}
+{#                                                <h6 class="m-b-20  text-center">Total Buses</h6>#}
+{#                                                <h2 class="text-center m-b-0"><i class="fa fa-cart-plus f-left"></i><span>{{ total_b}}</span></h2>#}
+{#                                                <p class="m-b-0 text-center">Shows the Total bus in the system.</p>#}
+{#                                            </div>#}
+                                            <div class="card-block">
+                                                <h6 class="m-b-20 text-center">Pending Tickets</h6>
+                                                <h2 class="text-right text-center"><i class="fa fa-rocket f-left"></i><span>{{ total_pending }}</span></h2>
+                                                <p class="m-b-0 text-center">Shows the pending Tickets in the system.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-md-4 col-xl-3">
+                                        <div class="card bg-c-yellow order-card">
+                                            <div class="card-block">
+                                                <h6 class="m-b-20 text-center">Completed Orders</h6>
+                                                <h2 class="text-right text-center"><i class="fa fa-refresh f-left"></i><span>{{ total_used }}</span></h2>
+                                                <p class="m-b-0 text-center">Shows the total used Tickets in the system.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-xl-3">
+                                        <div class="card bg-c-pink order-card">
+                                            <div class="card-block">
+                                                <h6 class="m-b-20 text-center">Refund Tickets</h6>
+
+                                                <h2 class="text-right text-center"><i class="fa fa-credit-card f-left"></i><span>{{ total_Refund }}</span></h2>
+                                                <h6 class=" text-center">Cancel Tickets</h6>
+                                                <h2 class="text-right text-center"><i class="fa fa-credit-card f-left"></i><span>{{ cancel }}</span></h2>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                                <ul class="nav justify-content-center m-5">
+                                    <li class="nav-item">
+                                    <h4 class="nav-link active" aria-current="page" href="#">Filter By</h4>
+                                  </li>
+                                    <li class="nav-item">
+                                    <a class="nav-link " aria-current="page" href="{% url 'older_ticket_details' %}">All</a>
+                                  </li>
+{#                                  <li class="nav-item">#}
+{#                                    <a class="nav-link " aria-current="page" href="?ticket_pending=1">Pending</a>#}
+{#                                  </li>#}
+{#                                    <li class="nav-item">#}
+{#                                    <a class="nav-link " aria-current="page" href="?ticket_pending=0">Completed</a>#}
+{#                                  </li>#}
+{##}
+{#                                    <li class="nav-item">#}
+{#                                    <a class="nav-link " aria-current="page" href="?ticket_pending=2">Canceled</a>#}
+{#                                  </li>#}
+                                    <li class="nav-item">
+                                    <a class="nav-link " aria-current="page" href="?ticket_pending=3">Refund</a>
+                                  </li>
+{#                                  <li class="nav-item">#}
+{#                                    <a class="nav-link btn btn-primary mr-5" href="{% url 'ticket' %}">Go back to ticket page</a>#}
+{#                                  </li>#}
+                                </ul>
+
+                                <form class="d-flex m-5" method="post" action="{% url 'ticket' %}">
+                                    {% csrf_token %}
+{#                                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">#}
+                                    {{ ticket_search_from.search_from }}
+                                  <button class="btn btn-outline-success" type="submit">Search</button>
+                                </form>
+
+
+                    <h4 class="card-title">Backup Details</h4>
+
+
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>User ID</th>
+                          <th>Bus Plate No</th>
+                          <th>Invoice No</th>
+                          <th>Date and Time</th>
+                          <th>Status</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {%  for ticket_data in ticket_pending %}
+                        <tr>
+                          <td>
+                              <img src="{% static 'images/faces-clipart/pic-3.png' %}" class="me-2" alt="image"> {{ ticket_data.passengerID }}
+                          </td>
+                          <td id="{{ ticket_data.ticket_id }}" name="passenger">{{ ticket_data.bus_plate_no }}</td>
+
+                          <td class="text-danger">{{ ticket_data.invoiceno }}</td>
+
+                            <td id="{{ ticket_data.ticket_id }}" name="passenger">{{ ticket_data.c_time }}</td>
+
+                            {% if ticket_data.ticket_status == 1 %}
+                                <td><label class="badge badge-warning">Pending</label></td>
+                            {% elif ticket_data.ticket_status == 0 %}
+                                <td><label class="badge badge-success">Used</label></td>
+                            {% elif ticket_data.ticket_status == 2 %}
+                                <td><label class="badge badge-danger">Canceled</label></td>
+                            {% elif ticket_data.ticket_status == 3 %}
+                                <td><label class="badge badge-secondary">Refunded</label></td>
+                            {% endif %}
+
+                            {% if ticket_data.ticket_status == 1 %}
+                                 <td> <a class="btn btn-outline-primary btn-sm align-center" href="{% url 'olderViewTicket' ticket_data.ticket_id %}" id="{{ ticket_data.ticket_id }}" style=""> Re fund </a> </td>
+                            {% endif %}
+
+{#                            <td class="text-center">#}
+{#                                 <button type="button" class="btn-sm btn-primary" data-bs-toggle="modal" id="{{ feed_back.feed_back_id }}" name="view_btn" data-bs-target="#view">View</button>#}
+{#                                 <button type="button" class="btn-sm btn-primary"  id="{{ feed_back.feed_back_id }}">View</button>#}
+{#                            </td>#}
+{#                            <td> <button class="btn-sm bg-primary text-white" type="button" id="{{ feed_back.feed_back_id }}" style=""> View </button> </td>#}
+{##}
+{#                            <td> <a class="btn-sm bg-danger text-white" href="" id="{{ feed_back.feed_back_id }}" style=""> Delete </a> </td>#}
+
+                        </tr>
+
+
+                        <!-- Button trigger modal -->
+
+
+                      {% endfor %}
+
+
+                        <!-- Modal -->
+{#                        <div class="modal fade" id="view" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">#}
+{#                          <div class="modal-dialog">#}
+{#                            <div class="modal-content">#}
+{#                              <div class="modal-header">#}
+{#                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>#}
+{#                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>#}
+{#                              </div>#}
+{#                              <div class="modal-body">#}
+{#                                    <p id="inq_data"></p>#}
+{#                              </div>#}
+{#                              <div class="modal-footer">#}
+{#                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>#}
+{#                                <button type="button" class="btn btn-primary">Save changes</button>#}
+{#                              </div>#}
+{#                            </div>#}
+{#                          </div>#}
+{#                        </div>#}
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

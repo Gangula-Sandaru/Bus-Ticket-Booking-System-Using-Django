@@ -1,0 +1,30 @@
+{% extends 'Administration/base.html' %}
+
+{% load static %}
+
+{% block title %}
+{% endblock %}
+
+{% block link %}
+{% endblock %}
+
+{% block main %}
+    <div class="container-fluid">
+        <div class="text-center">
+            <img src="https://cdn.dribbble.com/users/2185205/screenshots/7886140/02-lottie-tick-01-instant-2.gif">
+        </div>
+        <div class="text-center">
+        <h1>Refunded Successfully.</h1>
+        <p>75% of the Ticket has been sent to the user.</p>
+        <p>Thank you <a href="{% url 'index' %}">QuickBooking.lk</a> </p>
+
+            <div class="p-5">
+                <a href="{% url 'adminDashboard' %}" class="p-3">Go back to the home</a>
+                <a href="{% url 'older_ticket_details' %}" class="p-3">Go to Ticket Details.</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+{% endblock %}

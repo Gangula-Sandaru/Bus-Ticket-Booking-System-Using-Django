@@ -1,0 +1,275 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    Payment
+{% endblock %}
+{% block link %}
+    {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/payments.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/payment_loader.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/payment_success.css' %}">
+
+    <script>
+
+        $(document).ready(function (e) {
+
+            $(".paypalpay").hide();
+            $(".load-animation").hide()
+            $(".payment-success").hide()
+
+            $(".button2").click(function () {
+
+                $(".load-animation").hide()
+                $(".creditpay").hide();
+                $(".paypalpay").show();
+
+            })
+
+            $(".button1").click(function () {
+                $(".load-animation").hide()
+                $(".paypalpay").hide();
+                $(".creditpay").show();
+
+            })
+            $(".payment").click(function () {
+                $(".paypalpay").hide();
+                $(".creditpay").hide();
+
+                setTimeout($(".load-animation").show(), 5000)
+                $(this).hide()
+
+            })
+
+        })
+
+    </script>
+{% endblock %}
+
+{% block main %}
+
+    <div class="container container_pay  d-md-flex align-items-center" style="background-color: white">
+  <div class="card box1 shadow-sm p-md-5 p-md-5 p-4">
+    <div class="fw-bolder mb-4">
+       <span class="h3">Total: </span>
+      <span class="fas fa-dollar-sign"></span><span class="ps-1 h3">Rs {{ price }}</span>
+    </div>
+    <div class="d-flex flex-column">
+      <div class="d-flex align-items-center justify-content-between text">
+        <span class="">Nic no: </span>
+        <span class="fas fa-dollar-sign"><span class="ps-1">{{ user_nic }}</span></span>
+      </div>
+        <div class="d-flex align-items-center justify-content-between text">
+        <span class="">Selected Seat No: </span>
+        <span class="fas fa-dollar-sign">
+            <span class="ps-1">
+                {% for seat in seat_no %}
+                    {{ seat }}
+                {% endfor %}</span></span>
+      </div>
+      <div class="d-flex align-items-center justify-content-between text mb-4">
+        <span>Email: </span>
+        <span class="fas fa-dollar-sign"><span class="ps-1">{{ user_phone_no }}</span></span>
+      </div>
+        <div class="d-flex align-items-center justify-content-between text mb-4">
+        <span>Total Amount: </span>
+        <span class="fas fa-dollar-sign"><span class="ps-1">Rs {{ price }}</span></span>
+      </div>
+      <div class="border-bottom mb-2"></div>
+      <div class="d-flex flex-column mb-4">
+        <span class="far fa-file-alt text"><span class="ps-2">Invoice ID:</span></span>
+          {% for invoice in invoce_id %}
+        <span class="ps-3">{{ invoice }}</span>
+          {% endfor %}
+      </div>
+      <div class="d-flex flex-column mb-5">
+        <span class="far fa-calendar-alt text"><span class="ps-2">Date and Time:</span></span>
+        <span class="ps-3">{{ date }} - {{ time }}</span>
+
+      </div>
+      <div class="d-flex align-items-center justify-content-between text mt-2">
+        <div class="d-flex flex-column text">
+          <span>Customer Support:</span> <span>online chat 24/7</span>
+        </div>
+        <div class="btn btn-primary rounded-circle">
+          <span><i class="bi bi-person-check"></i></span>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card box2 shadow-sm">
+    <div class="d-flex align-items-center justify-content-between p-md-5 p-4">
+      <span class="h5 fw-bold m-0">Payment methods</span>
+      <div class="btn btn-primary bar"><span class=""><i class="bi bi-layout-text-sidebar-reverse"></i></span></div>
+    </div>
+
+
+
+    <ul class="nav nav-tabs mb-3 px-md-4 px-2">
+      <li class="nav-item">
+{#             <a class="nav-link px-2 active" aria-current="page" href="#">Credit Card</a>#}
+          <button class="nav-link px-2 button1 active" id="button1">Credit Card</button>
+      </li>
+      <li class="nav-item">
+{#          <a class="nav-link px-2" href="#">Paypal Payment</a>#}
+          <button class="nav-link px-2 button2" id="button2">Paypal Payment </button>
+{#      </li>#}
+{#      <li class="nav-item ms-auto">#}
+{#        <a class="nav-link px-2" href="#">+ More</a>#}
+{#      </li>#}
+    </ul>
+
+
+{#    <div class="px-md-5 px-4 mb-4 d-flex align-items-center "  id="#creditpay">#}
+{#      <div class="btn btn-success me-4"><span class="fas fa-plus"></span></div>#}
+{#      <div class="btn-group" role="group" aria-label="Basic radio toggle button group">#}
+{#        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked/>#}
+{#        <label class="btn btn-outline-primary" for="btnradio1"><span class="pe-1">+</span>5949</label>#}
+{#        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"/>#}
+{#        <label class="btn btn-outline-primary" for="btnradio2"><span class="lpe-1">+</span>3894</label>#}
+{#      </div>#}
+{#    </div>#}
+    <form action="{% url 'payment' %}" method="post">
+        {% csrf_token %}
+
+      <div class="row creditpay">
+                <!-- remove the whole section  *********************************************************-->
+        <div class="col-12">
+          <div class="d-flex flex-column px-md-5 px-4 mb-4 mt-4">
+
+            <span>Credit Card         <p>{{ success }}</p> </span>
+            <div class="inputWithIcon">
+                {{ credit_card_from.card_no }}
+{#              <input class="form-control" type="text" value="5136 1845 5468 3894"/>#}
+                {% for error in credit_card_from.card_no.errors %}
+                     <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 13px">{{ error }}</p>
+                 {% endfor %}
+              <span class="mb-4">
+                <img src="https://www.freepnglogos.com/uploads/mastercard-png/mastercard-logo-logok-15.png" alt=""/>
+
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="d-flex flex-column ps-md-5 px-md-0 px-4 mb-4 ml-5" >
+            <span>Expiration<span class="ps-1">Date</span></span>
+            <div class="inputWithIcon">
+                {{ credit_card_from.expire_date }}
+{#              <input type="text" class="form-control" value="05/20" />#}
+                 {% for error in credit_card_from.expire_date.errors %}
+                     <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 13px">{{ error }}</p>
+                 {% endfor %}
+              <span class="fas fa-calendar-alt"></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="d-flex flex-column pe-md-5 px-md-0 px-4 mb-4 mr-5">
+            <span>Code CVV</span>
+            <div class="inputWithIcon">
+                {{ credit_card_from.code_cvv }}
+                <div class="mb-2">
+                    <span class=""><i class="bi bi-lock"></i></span>
+                </div>
+                {% for error in credit_card_from.code_cvv.errors %}
+                     <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 13px">{{ error }}</p>
+                 {% endfor %}
+{#              <input type="password" class="form-control" value="123" />#}
+
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="d-flex flex-column px-md-5 px-4 mb-4">
+            <span>Name</span>
+            <div class="inputWithIcon">
+                {{ credit_card_from.name }}
+                <div class="mb-2">
+                    <span class=""><i class="bi bi-person"></i></span>
+                </div>
+                {% for error in credit_card_from.name.errors %}
+                     <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 13px">{{ error }}</p>
+                 {% endfor %}
+{#              <input class="form-control text-uppercase" type="text" value="valdimir berezovkiy"/>#}
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 px-md-5 px-4 mt-3">
+          <button class="btn btn-primary w-100 cash payment text-white" type="submit">Pay Rs {{ price }}</button>
+        </div>
+
+      </div>
+
+
+         <!-- ******************************* End of the credit card from ************************************* -->
+
+          <div class="row paypalpay">
+        <div class="col-12">
+            <div class="text-center">
+                 <img src="https://i.pcmag.com/imagery/reviews/068BjcjwBw0snwHIq0KNo5m-15..v1602794215.png"
+                 style="width: 200px; height: 50px" alt="">
+            </div>
+          <div class="d-flex flex-column px-md-5 px-4 mb-4 mt-5">
+
+            <span>Paypal Email Address</span>
+            <div class="inputWithIcon">
+              <input class="form-control" type="text" value="" placeholder="example@gmail.com"/>
+                {{ credit_card_from.card_number }}
+              <span class="">
+                <i class="bi bi-paypal"></i></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="d-flex flex-column px-md-5 px-4 mb-4">
+            <span>Password</span>
+            <div class="inputWithIcon">
+              <input class="form-control text-uppercase" type="password" value="" placeholder="password"/>
+                <div class="mb-2">
+                    <span class=""><i class="bi bi-lock"></i></span>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 px-md-5 px-4 mt-3">
+          <div class="btn btn-primary w-100 payment">Pay Rs {{ price }}</div>
+        </div>
+      </div>
+
+        <div class="load-animation mt-5 p-5 pb-5">
+            <figure>
+                <div class="dot white"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </figure>
+            <div class="pt-5 mt-5 fw-bold">
+                <h4 class="pt-5 text-center ppt">Processing your request ....</h4>
+            </div>
+        </div>
+
+
+
+{#         <div class="payment-success">#}
+{#                  <div class="card succss-mgs " style=" padding: 0px 42px 42px;">#}
+{#                     <div class="text-center" ><i class="bi bi-check-circle" style="font-size: 80px"></i></div>#}
+{#                      <h1 class="success-h1 text-center">Success</h1>#}
+{#                     <p class="mgs text-center">Thank you for your payment!</p>#}
+{#                      <div class="text-center mt-4">#}
+{#                     <a class="btn text-center pl-5 pr-5 text-white" href="{% url 'index' %}" style="background-color: #9ABC66;">Ok</a>#}
+{#                          </div>#}
+{#                  </div>#}
+{#            </div>#}
+
+
+    </form>
+  </div>
+</div>
+
+{% endblock %}

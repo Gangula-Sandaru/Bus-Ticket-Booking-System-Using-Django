@@ -1,0 +1,93 @@
+{% extends 'main/base.html' %}
+{% block title %}
+    Subscribe Success
+{% endblock %}
+
+{% block link %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/common_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/common_responsive.css' %}">
+{% endblock %}
+
+{% block main %}
+        	<div class="home">
+		<div class="parallax_background parallax-window " data-parallax="scroll" data-image-src="https://www.setra-bus.com/content/dam/sbo/markets/common/models/cc-hd-models/images/teaser/EB29590-CC-HD-teaser-home-01.jpg" data-speed="0.8"></div>
+		<div class="home_container">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<div class="home_content text-center">
+							<div class="home_title"><h1>Subscribe success</h1></div>
+							<div class="home_text"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Search Box -->
+
+	<div class="search_box">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="search_box_container d-flex flex-row align-items-center justify-content-start">
+						<div class="search_form_container">
+							<form action="{% url 'time table' %}" id="search_form" class="search_form" method="post">
+                                {% csrf_token %}
+								<div class="d-flex flex-lg-row flex-column align-items-center justify-content-start">
+									<ul class="search_form_list d-flex flex-row align-items-center justify-content-start flex-wrap">
+
+
+										<li>
+                                            <input type="text" class="search_dropdown d-flex flex-row align-items-center justify-content-start" name="start_location" placeholder="  Departure Location">
+										</li>
+										<li>
+											<input type="text" class="search_dropdown d-flex flex-row align-items-center justify-content-start" name="end_location" placeholder="  Arrival Location">
+
+										</li>
+										<li>
+											<input type="date" class="search_dropdown d-flex flex-row align-items-center justify-content-start" name="date"  placeholder="  Date">
+
+										</li>
+										<li>
+											<input type="time" class="search_dropdown d-flex flex-row align-items-center justify-content-start"  name="route_time" placeholder="  Time">
+
+										</li>
+										<li>
+											<input type="text" class="search_dropdown d-flex flex-row align-items-start" placeholder="Route no (Optional)" name="route">
+
+										</li>
+									</ul>
+									<input class="search_button" type="submit" name="search" value="Search">
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <div class="container bg-white pt-5">
+        <div>
+            <div>
+                <p class="h1 pt-3 text-center">Welcome</p>
+            </div>
+            <div>
+                 <div class="text-center p-5">
+                <img src="https://gravitec.net/blog/wp-content/uploads/2019/10/news-530220_640.jpg" class="text-center">
+                    </div>
+
+                <p class="pt-3 text-center">
+                    Thank you for joining our flavourful journey and signing up for QuckBooking updates.
+                    We hope to refresh you with new and good happenings at our company and about our products, brands, and new innovations in the food and beverage sector.
+                    We also share interesting news on social media.
+                </p>
+
+
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

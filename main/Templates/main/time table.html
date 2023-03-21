@@ -1,0 +1,183 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    Time Table
+{% endblock %}
+
+{% block link %}
+    {% load static %}
+{#    <link rel="stylesheet" type="text/css" href=" {% static 'styles/time table.css' %}">#}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/contact_us.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/contact_us_responsive.css' %}">
+
+    <script>/*
+        $(document).ready(function(){
+          $('.search_dropdown').on('input',function(){
+              if($(this).val().length) // Checks if there is any value present or not
+                  $('.search_dropdown').not(this).prop('enable', true); // Disable all input except the current.
+              else
+                  $('.search_dropdown').removeAttr('disabled'); // Enable all input by removing the "disabled" property from controls.
+          });
+        });*/
+    </script>
+{% endblock %}
+
+{% block main %}
+{% block headline %} Booking {% endblock %}
+    {% block subline %}
+    {% endblock %}
+
+
+<div class="super_container">
+    	<div class="home">
+		<div class="parallax_background parallax-window " data-parallax="scroll" data-image-src="https://www.setra-bus.com/content/dam/sbo/markets/common/models/cc-hd-models/images/teaser/EB29590-CC-HD-teaser-home-01.jpg" data-speed="0.8"></div>
+		<div class="home_container">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<div class="home_content text-center">
+							<div class="home_title"><h1>Time Table</h1></div>
+							<div class="home_text"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Search Box -->
+
+	<div class="search_box">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="search_box_container d-flex flex-row align-items-center justify-content-start">
+						<div class="search_form_container">
+							<form action="{% url 'time table' %}" id="search_form" class="search_form" method="post">
+                                {% csrf_token %}
+								<div class="d-flex flex-lg-row flex-column align-items-center justify-content-start">
+									<ul class="search_form_list d-flex flex-row align-items-center justify-content-start flex-wrap">
+
+
+										<li>
+                                            <input type="text" class="search_dropdown d-flex flex-row align-items-center justify-content-start" name="start_location" placeholder="  Arrival Location">
+										</li>
+										<li>
+											<input type="text" class="search_dropdown d-flex flex-row align-items-center justify-content-start" name="end_location" placeholder="  Departure Location">
+
+										</li>
+										<li>
+											<input type="date" class="search_dropdown d-flex flex-row align-items-center justify-content-start" name="date"  placeholder="  Date">
+
+										</li>
+										<li>
+											<input type="time" class="search_dropdown d-flex flex-row align-items-center justify-content-start"  name="route_time" placeholder="  Time">
+
+										</li>
+										<li>
+											<input type="text" class="search_dropdown d-flex flex-row align-items-start" placeholder="Route no (Optional)" name="route">
+
+										</li>
+									</ul>
+									<input class="search_button" type="submit" name="search" value="Search">
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <div class="container-fluid">
+			<div class="row">
+				<div class="col">
+					<div class="section_title_container text-center">
+						<div class="section_title"><h1>Find out more route details</h1></div>
+						<div class="section_text">we offere more than 100+ bus routes available for cheese to go different places of the city.</div>
+					</div>
+				</div>
+			</div>
+
+<section class="intro">
+  <div class="bg-image h-100" style="background-color: #f5f7fa;">
+    <div class="mask d-flex align-items-center h-100">
+      <div class="container-fluid">
+        <div class="row justify-content-center">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body p-0">
+                <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 700px">
+                  <table class="table table-striped mb-0 table-hover">
+                    <thead style="background-color: #002d72;">
+                      <tr>
+                        <th scope="col" class="text-light">Route No</th>
+                        <th scope="col" class="text-light">Departure</th>
+                        <th scope="col" class="text-light">Arrival</th>
+                        <th scope="col" class="text-light">Bus Number</th>
+{#                        <th scope="col" class="text-light">Average run Time</th>#}
+                        <th scope="col" class="text-light">Date</th>
+                        <th scope="col" class="text-light">Departure Time</th>
+{#                        <th scope="col" class="text-light">Total Distance</th>#}
+                        <th scope="col" class="text-light">Availability</th>
+                        <th scope="col" class="text-light"></th>
+
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for route in routes %}
+                        <tr>
+                        <td>{{ route.route_no }}</td>
+                        <td>{{ route.start_location }}</td>
+                        <td>{{ route.end_location }}</td>
+                        <td>{{ route.bus_plate_no}}</td>
+{#                        <td>{{ route.avg_run_time }} Hour</td>#}
+                        <td>{{ route.route_date }}</td>
+                        <td>{{ route.route_time }}</td>
+{#                        <td>{{ route.total_distance }}KM</td>#}
+
+                        <td>
+                            {% if route.route_status == 1 %}
+                                Available
+                            {% else %}
+                                Not available
+                            {% endif %}
+                        </td>
+                     <td>
+
+{#            <form action="{% url 'booking' %}" method="post">#}
+{#                {% csrf_token %}#}
+                {% if route.route_status == 1 %}
+{#                    <button class="btn btn-primary" id="{{ route.route_id }}" type="submit">Booking</button>#}
+{#                    <input type="submit" name="booking" value="Booking" id="{{ route.route_id }}" class="btn btn-primary">#}
+                    <a href="{% url 'booking' route.route_id %}" class="btn btn-primary">Booking</a>
+{#                    <a href="#" class="btn btn-primary">Booking</a>#}
+                {% else %}
+{#                    <button class="btn btn-danger" id="{{ route.route_id }}" type="submit">Booking</button>#}
+{#                    <input type="submit" name="booking" value="Booking" id="{{ route.route_id }}" class="btn btn-danger">#}
+                    <a href="{% url 'booking' route.route_id %}" class="btn btn-danger disabled">Booking</a>
+{#                    <a href="#" class="btn btn-danger disabled" >Booking</a>#}
+
+                {% endif %}
+{#            </form>#}
+
+        </td>
+
+        {% endfor %}
+         </tr>
+                    </tbody>
+                  </table>
+                <div class="content text-center mt-5 p-3">
+                    <P>{{ zero_result }}</P> <!--show if the result not available -->
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+    </div>
+{% endblock %}

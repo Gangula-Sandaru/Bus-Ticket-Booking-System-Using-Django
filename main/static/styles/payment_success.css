@@ -1,0 +1,26 @@
+.success-h1{
+          color: #88B04B;
+          font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+          font-weight: 900;
+          font-size: 40px;
+          margin-bottom: 10px;
+        }
+        .mgs {
+          color: #404F5E;
+          font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+          font-size:20px;
+          margin: 0;
+        }
+      .mark {
+        color: #9ABC66;
+        font-size: 100px;
+        line-height: 200px;
+        margin-left:15px;
+      }
+      .succss-mgs {
+        width: 100%;
+          padding: 0px 42px 42px;
+          display: inline-block;
+        border: none;
+
+      }

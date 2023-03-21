@@ -1,0 +1,303 @@
+{% extends 'Administration/base.html' %}
+{% load static %}
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block link %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // jquery function
+        const date = new Date();
+
+        let day = date.getDate();
+        let month = date.getMonth() + 1;
+        let year = date.getFullYear();
+        let currentDate = `${year}-${'0' + month}-${day}`;
+
+        console.log(currentDate)
+        var tt = {{ ticket }}
+        var track = {{ dailay_track }}
+        $(document).ready(function(){
+            var used_ticket = 0
+            var cancel_ticket = 0
+            var refund_ticket = 0
+            var pending_ticket = 0
+
+            total_ticket_list = []
+            var price = 0
+            setInterval(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: "{% url 'get_static' %}",
+                    success: function (response) {
+                       var total = 0
+                       var current_date = 0
+                       var user = 0
+
+
+
+                       for(var i in response.datalist){
+                           console.log(response)
+                           total += parseInt(response.datalist[i].daily_sale)
+                           user += response.datalist[i].user_qty
+                           {#console.log(currentDate)#}
+                           if(response.datalist[i].sale_id === currentDate){
+                               current_date = response.datalist[i].daily_sale
+                               used_ticket = response.datalist[i].used_ticket_qty
+                               cancel_ticket = response.datalist[i].cancel_ticket_qty
+                               refund_ticket = response.datalist[i].refund_ticket_qty
+                               pending_ticket = response.datalist[i].pending_ticket_qty
+                               total_ticket_list.push(used_ticket)
+                               total_ticket_list.push(cancel_ticket)
+                               total_ticket_list.push(refund_ticket)
+                               total_ticket_list.push(pending_ticket)
+
+                           }
+
+
+
+                       }
+                       console.log(total)
+                        console.log(user)
+                        document.getElementById('total').innerHTML = "Rs." + total.toFixed(2)
+
+                        document.getElementById('user_c').innerHTML =  user
+                        document.getElementById('daily_earn').innerHTML = "Rs." + current_date
+                    },
+                    error:function (response) {
+                        {#alert("no data fund")#}
+                    }
+                })
+                
+            },1000)
+            console.log(total_ticket_list)
+
+
+            {#const ticket_data = [55, 19, 3, 5]#}
+            // doughnut chart
+            var ctx = document.getElementById('Static').getContext('2d');
+            var Static = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                        labels: ['Used', 'Cancel', 'Refund', 'Pending'],
+                        datasets: [{
+                            label: 'Ticket details',
+                            data: tt,
+                            borderWidth: 1
+                        }]
+                },
+                options: {
+                    /*
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }*/
+                }
+            })
+            // line chart
+        {#const ticket_summer_data = [12, 19, 3, 5,78,54,2,6,75,50,10,100,60]#}
+            var ctx_growth = document.getElementById('growth').getContext('2d');
+            var growth = new Chart(ctx_growth, {
+                type: 'line',
+                data: {
+                        {#labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],#}
+                        labels:['Saturday', 'Sunday', 'Monday', 'Thursday', 'Wednesday','Thursday', 'Friday'],
+                        datasets: [{
+                            label: 'Growth',
+                            data: track,
+                            borderWidth: 1,
+                            borderColor:'#98786',
+                        }]
+                },
+                options: {
+                    /*
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }*/
+                }
+            })
+
+        });
+    </script>
+
+{% endblock %}
+
+{% block main %}
+
+          {%  if user.is_authenticated and user.is_superuser %}
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="page-header">
+              <h3 class="page-title">
+                <span class="page-title-icon bg-gradient-primary text-white me-2">
+                  <i class="mdi mdi-home"></i>
+                </span> Home
+              </h3>
+              <nav aria-label="breadcrumb">
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item active" aria-current="page">
+                    <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+            <div class="row">
+              <div class="col-md-4 stretch-card grid-margin">
+                <div class="card bg-gradient-danger card-img-holder text-white">
+                  <div class="card-body">
+                    <img src="{% static 'images/dashboard/circle.svg' %}" class="card-img-absolute" alt="circle-image" />
+                    <h4 class="font-weight-normal mb-3 text-center">Monthly Sales <i class="mdi mdi-chart-line mdi-24px float-right"></i>
+                    </h4>
+                    <h2 class="mb-5 text-center" id="total"></h2>
+
+                    <h6 class="card-text text-center text-light" id="month_increase"> This is showing the total sales of the month.</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 stretch-card grid-margin">
+                <div class="card bg-gradient-info card-img-holder text-white">
+                  <div class="card-body">
+                    <img src="{% static 'images/dashboard/circle.svg' %}" class="card-img-absolute" alt="circle-image" />
+                    <h4 class="font-weight-normal mb-3 text-center">Daily sales <i class="mdi mdi-chart-line mdi-24px float-right"></i>
+                    </h4>
+                    <h2 class="mb-5 text-center" id="daily_earn"></h2>
+                    <h6 class="card-text text-center">This is showing the total sales of the day.</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 stretch-card grid-margin">
+                <div class="card bg-gradient-success card-img-holder text-white">
+                  <div class="card-body">
+                    <img src="{% static 'images/dashboard/circle.svg' %}" class="card-img-absolute" alt="circle-image" />
+                    <h4 class="font-weight-normal mb-3 text-center">Users <i class="bi bi-people"></i>
+                    </h4>
+                    <h2 class="mb-5 text-center" id="user_c"></h2>
+                    <h6 class="card-text text-center">This is showing the total users that use the site.</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+
+              <div class="col-md-7 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="clearfix">
+                      <h4 class="card-title float-left">Ticket statics</h4>
+                      <div id="visit-sale-chart-legend" class="rounded-legend legend-horizontal legend-top-right float-right"></div>
+                    </div>
+                    <canvas id="growth" class="mt-4"></canvas>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-5 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Ticket Details</h4>
+{#                    <canvas id="traffic-chart"></canvas>#}
+
+                    <canvas id="Static"></canvas>
+
+                    <div id="traffic-chart-legend" class="rounded-legend legend-vertical legend-bottom-left pt-4"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Recent Tickets</h4>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>User ID</th>
+                            <th>Bus Plate No</th>
+                            <th>Invoice No</th>
+                            <th>Date and Time</th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                      {%  for ticket_data in tickets %}
+                        <tr>
+                          <td>
+                              <img src="{% static 'images/faces-clipart/pic-3.png' %}" class="me-2" alt="image"> {{ ticket_data.passengerID }}
+                          </td>
+                          <td id="{{ ticket_data.ticket_id }}" name="passenger">{{ ticket_data.bus_plate_no }}</td>
+
+                          <td class="text-danger">{{ ticket_data.invoiceno }}</td>
+
+                            <td id="{{ ticket_data.ticket_id }}" name="passenger">{{ ticket_data.c_time }}</td>
+
+                            {% if ticket_data.ticket_status == 1 %}
+                                <td><label class="badge badge-warning">Pending</label></td>
+                            {% elif ticket_data.ticket_status == 0 %}
+                                <td><label class="badge badge-success">Used</label></td>
+                            {% elif ticket_data.ticket_status == 2 %}
+                                <td><label class="badge badge-danger">Canceled</label></td>
+                            {% elif ticket_data.ticket_status == 3 %}
+                                <td><label class="badge badge-secondary">Refunded</label></td>
+                            {% endif %}
+
+{#                            <td class="text-center">#}
+{#                                 <button type="button" class="btn-sm btn-primary" data-bs-toggle="modal" id="{{ feed_back.feed_back_id }}" name="view_btn" data-bs-target="#view">View</button>#}
+{#                                 <button type="button" class="btn-sm btn-primary"  id="{{ feed_back.feed_back_id }}">View</button>#}
+{#                            </td>#}
+{#                            <td> <button class="btn-sm bg-primary text-white" type="button" id="{{ feed_back.feed_back_id }}" style=""> View </button> </td>#}
+{##}
+{#                            <td> <a class="btn-sm bg-danger text-white" href="" id="{{ feed_back.feed_back_id }}" style=""> Delete </a> </td>#}
+
+                        </tr>
+
+
+                      {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+            {% endif %}
+            {% if user.is_authenticated and not user.is_superuser %}
+            <div  class="container" style="text-align: center">
+                <p class="display-4 mt-5 align-items-center" >Welcome {{ user.username }}</p>
+                <p class="display-4 mt-5 align-items-center" >You have been login to your account at {{ user.last_login }}</p>
+                <p class="display-4 mt-5 align-items-center" >This is Driver's account</p>
+            </div>
+            {% endif %}
+          </div>
+
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+          <footer class="footer text-center">
+
+{#              <span class="float-none float-sm-end mt-1 mt-sm-0 text-end"> Free <a href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Bootstrap admin template</a> from Bootstrapdash.com</span>#}
+
+                <span class="text-muted d-block text-center text-sm-start d-sm-inline-block">QuickBooking.lk, No.54 Mathugama Road, Colombo, Sri Lanka. </span> <br>
+
+                <span class="text-muted d-block text-center text-sm-start d-sm-inline-block">Copyright © QuickBooking.lk 2022</span>
+          </footer>
+          <!-- partial -->
+        </div>
+
+
+        <!-- main-panel ends -->
+
+      <!-- page-body-wrapper ends -->
+
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

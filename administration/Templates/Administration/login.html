@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Login</title>
+    <!-- plugins:css -->
+      {% load static %}
+    <link rel="stylesheet" href="{% static 'vendors/mdi/css/materialdesignicons.min.css '%}">
+    <link rel="stylesheet" href="{% static 'vendors/css/vendor.bundle.base.css' %}">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" />
+
+      <style>
+
+      </style>
+      <script>/*
+          $(document).ready(function() {
+              $("#togglePassword").click(function() {
+                var input = $("#id_passwd");
+                if (input.attr("type") === "password") {
+                  input.attr("type", "text");
+                } else {
+                  input.attr("type", "password");
+                }
+              });
+            });*/
+
+      </script>
+  </head>
+  <body>
+    <div class="container-scroller">
+      <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="content-wrapper d-flex align-items-center auth">
+          <div class="row flex-grow">
+            <div class="col-lg-4 mx-auto">
+              <div class="auth-form-light text-left p-5 rounded-3">
+                <div class="brand-logo text-center">
+{#                  <img src="{% static 'images/PROJECT LOGO 00010.png' %}">#}
+                    <h2 class="display-3">QuickBooking Administration</h2>
+                </div>
+
+                <h6 class="font-weight-bold text-center lead">Sign in.</h6>
+
+                   {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                             </div>
+                         {% endfor %}
+                    {% endif %}
+
+                <form class="pt-3 " action="{% url 'adminView' %}" method="post">
+                {% csrf_token %}
+                  <div class="form-group">
+{#                    <input type="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username">#}
+                        <div class="form-group d-flex">
+                      {{ loginfrom.userName }}
+                        <button class="text-decoration-none border-0 pl-3" type="button"><i class="bi bi-person"></i> </button>
+                    </div>
+                      <p style="font-size: 13px;"> Enter your username.</p>
+                      {% for error in form.userName.errors %}
+                          <p class="help text-danger text-capitalize">{{ error }}</p>
+                      {% endfor %}
+                  </div>
+                  <div class="form-group" >
+{#                    <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password">#}
+                    <div class="form-group d-flex">
+                      {{ loginfrom.passwd }}
+                        <button class="text-decoration-none border-0 pl-3 " type="button"><i class="bi bi-eye-slash" id="togglePassword"></i> </button>
+                    </div>
+                      <p style="font-size: 13px;"> Enter your password.</p>
+                      {% for error in form.passwd.errors %}
+                          <p class="help text-danger text-capitalize">{{ error }}</p>
+                      {% endfor %}
+
+                  </div>
+                  <div class="my-3 d-flex justify-content-between align-items-center">
+{#                    <div class="form-check">#}
+{#                      <label class="form-check-label text-muted">#}
+{#                        <input type="checkbox" class="form-check-input"> #}
+{#                          {{ loginfrom.keepSignIn }}#}
+{#                          Keep me signed in </label>#}
+{#                    </div>#}
+{#                    <a href="#" class="auth-link text-black">Forgot password?</a>#}
+                  </div>
+                    <div class="mt-2 text-center">
+                    <a class="pe-5"  href="{% url 'index' %}">Go Back to home</a>
+                    <button class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" type="submit">SIGN IN</button>
+                  </div>
+
+                  <div class="mb-2 mt-3 text-center">
+                     <button type="button" class="btn btn-social-icon btn-facebook btn-rounded"><i class="mdi mdi-facebook"></i></button>
+                      <button type="button" class="btn btn-social-icon btn-youtube btn-rounded"><i class="mdi mdi-youtube"></i></button>
+                      <button type="button" class="btn btn-social-icon btn-twitter btn-rounded"><i class="mdi mdi-twitter"></i></button>
+                  </div>
+                              <div class="text-center">     <a href="#" class="auth-link text-black ">Forgot password?</a></div>
+{#                  <div class="text-center mt-4 font-weight-light"> Don't have an account? <a href="register.html" class="text-primary">Create</a>#}
+                  <div class="text-center mt-4 font-weight-light"> <a href="http://127.0.0.1:8000/"> QuickBooking </a> Administraion Copyright 2022 All right reserved
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="{% static  'vendors/js/vendor.bundle.base.js' %}"></script>
+    <!-- inject:js -->
+    <script src="{%  static 'js/off-canvas.js' %}"></script>
+    <script src="{%  static 'js/hoverable-collapse.js' %}"></script>
+    <script src="{%  static 'js/misc.js' %}"></script>
+    <!-- endinject -->
+  <script>
+
+        const togglePassword = document.querySelector("#togglePassword");
+        const password = document.querySelector("#id_passwd");
+
+        togglePassword.addEventListener("click", function (e) {
+            // toggle the type attribute
+             e.preventDefault();
+            const type = password.getAttribute("type") === "password" ? "text" : "password";
+            password.setAttribute("type", type);
+
+            // toggle the icon
+            this.classList.toggle("bi-eye");
+
+        });
+
+        // prevent form submit
+        /*
+        const form = document.querySelector("form");
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+        });*/
+    </script>
+  </body>
+</html>

@@ -1,0 +1,390 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block link %}
+{#     <script>#}
+{#      $(window).load("loader", function() {#}
+{#      $("#loader").fadeOut("hide");#}
+{##}
+{#        });#}
+{#     </script>#}
+{% endblock %}
+{% block main %}
+
+{#<div class="spinner-grow" role="status" id="loader">#}
+{#  <span class="visually-hidden">Loading...</span>#}
+{#</div>#}
+
+<div class="super_container">
+    	<div class="home">
+		<div class="parallax_background parallax-window " data-parallax="scroll" data-image-src="https://interlinebus.com.au/wp-content/uploads/2021/05/Homepage-Services-scaled-e1624256941986.jpg" data-speed="0.8" style="width: 100%; height: 800px"></div>
+		<div class="home_container">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<div class="home_content text-center">
+			                    <div class="home_title"><h1>Welcome to online bus ticketing system</h1></div>
+                                <div class="home_text">our service is to provide the passenger to book a ticket through online</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Search Box -->
+
+	<div class="search_box">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="search_box_container d-flex flex-row align-items-center justify-content-start">
+						<div class="search_form_container">
+							<form action="{% url 'time table' %}" id="search_form" class="search_form" method="post">
+                                {% csrf_token %}
+								<div class="d-flex flex-lg-row flex-column align-items-center justify-content-start">
+									<ul class="search_form_list d-flex flex-row align-items-center justify-content-start flex-wrap">
+
+
+										<li>
+                                            <input type="text" class="search_dropdown d-flex flex-row align-items-center justify-content-start" name="start_location" placeholder="  Arrival Location">
+										</li>
+										<li>
+											<input type="text" class="search_dropdown d-flex flex-row align-items-center justify-content-start" name="end_location" placeholder="  Departure Location">
+
+										</li>
+										<li>
+											<input type="date" class="search_dropdown d-flex flex-row align-items-center justify-content-start" name="date"  placeholder="  Date">
+
+										</li>
+										<li>
+											<input type="time" class="search_dropdown d-flex flex-row align-items-center justify-content-start"  name="route_time" placeholder="  Time">
+
+										</li>
+										<li>
+											<input type="text" class="search_dropdown d-flex flex-row align-items-start" placeholder="Route no (Optional)" name="route">
+
+										</li>
+									</ul>
+									<input class="search_button" type="submit" name="search" value="Search">
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+    <!-- Milestones -->
+
+	<div class="milestones">
+		<div class="container">
+			<div class="row">
+
+				<!-- Milestone -->
+				<div class="col-xl-3 col-md-6 milestone_col">
+					<div class="milestone d-flex flex-row align-items-end justify-content-start">
+						<div class="milestone_icon"><i class="fa fa-user-o" style="color: #da8661; font-size: 80px" ></i></div>
+						<div class="milestone_content">
+							<div class="milestone_counter" data-end-value="23" data-sign-after="k">{{ user_count }}</div>
+							<div class="milestone_text">Clients since opening</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Milestone -->
+				<div class="col-xl-3 col-md-6 milestone_col">
+					<div class="milestone d-flex flex-row align-items-end justify-content-start">
+						<div class="milestone_icon"><i class="fa fa-bus display-2" aria-hidden="true" style=" color: #da8661; font-size: 80px"></i></div>
+						<div class="milestone_content">
+							<div class="milestone_counter" data-end-value="120">{{ bus_count }}</div>
+							<div class="milestone_text">All our Buses</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Milestone -->
+				<div class="col-xl-3 col-md-6 milestone_col">
+					<div class="milestone d-flex flex-row align-items-end justify-content-start">
+						<div class="milestone_icon"><i class="fa fa-map-marker" aria-hidden="true" style=" color: #da8661; font-size: 80px"></i></div>
+						<div class="milestone_content">
+							<div class="milestone_counter" data-end-value="7">{{ route_count }}</div>
+							<div class="milestone_text">All our Routes</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Milestone -->
+				<div class="col-xl-3 col-md-6 milestone_col">
+					<div class="milestone d-flex flex-row align-items-end justify-content-start">
+						<div class="milestone_icon"><i class="fa fa-book" aria-hidden="true" style=" color: #da8661; font-size: 80px"></i></div>
+						<div class="milestone_content">
+							<div class="milestone_counter" data-end-value="36">{{ book_count }}</div>
+							<div class="milestone_text">Booking since opening</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- Intro -->
+
+	<div class="intro">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="section_title_container text-center">
+						  <div class="section_title"><h1> Book a Bus ticket Easy and Eficiently</h1></div>
+                            <div class="section_text">Plan your journey,Reach your  Distination,Reserved a seats.</div>
+					</div>
+				</div>
+			</div>
+			<div class="row intro_row">
+
+				<!-- Intro Image -->
+				<div class="col-lg-6">
+					<div class="intro_image"><img src="https://cdn.smartkarrot.com/wp-content/uploads/2020/09/Satisfied-Customers.png" alt="https://unsplash.com/@papao03"></div>
+				</div>
+
+				<!-- Intro Content -->
+				<div class="col-lg-6 intro_col">
+					<div class="intro_content">
+						<div class="quote"><img src="static/images/quote.png" alt=""></div>
+						<div class="intro_text">
+							 <p> These days most of the passengers are unable to their daily activities because of the unscheduled depature and arrival time from the buses.So we have provided the passengers an easier system to obtain the relevant route and the depature and arrival time.our web site  offers  you all the routes,depature and arrival time that are availble And also this website will provide you online bus reservation for the passengers.Through our website you can plan your journey easily and save your valuble time without waiting in long queues to buy your bus ticket. </p>
+						</div>
+						<div class="intro_author d-flex flex-row align-items-center justify-content-start">
+							<div class="author_image"><img src="static/images/author_1.jpg" alt="https://unsplash.com/@onurozkardes"></div>
+							<div class="intro_author_content">
+								<div class="intro_author_name">Michael Williams</div>
+								<div class="intro_author_title">client</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Facilities -->
+
+	<div class="facilities">
+		<div class="container">
+			<div class="row icon_box_row">
+
+				<!-- Icon Box -->
+				<div class="col-lg-4">
+					<div class="icon_box text-center">
+						<div class="icon_box_icon"><i class="bi bi-journal-plus" style="font-size: 60px; color: #da8661;"></i></div>
+                            <div class="icon_box_title"><h2>Live Booking</h2></div>
+						<div class="icon_box_text">
+                            <p>we have successfully completed 100+ live booking so far.</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Icon Box -->
+				<div class="col-lg-4">
+					<div class="icon_box text-center">
+						<div class="icon_box_icon"><i class="bi bi-wallet" style="font-size: 60px; color: #da8661;"></i></div>
+                        <div class="icon_box_title"><h2>Payment Security</h2></div>
+						<div class="icon_box_text">
+                                <p> we are 100% responsible for your payment and security.</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Icon Box -->
+				<div class="col-lg-4">
+					<div class="icon_box text-center">
+						<div class="icon_box_icon"><i class="bi bi-cash-stack" style="font-size: 60px; color: #da8661;"></i></div>
+                            <div class="icon_box_title"><h2>Offers & Promotion</h2></div>
+						<div class="icon_box_text">
+                            <p>Special discount offers and promotions are given to you who have joined us.</p>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+            <div class="row p-5">
+				<div class="col">
+					<div class="section_title_container text-center">
+						  <div class="section_title"><h1> Our Picture Gallery</h1></div>
+                            <div class="section_text">Ride with us to your Destination</div>
+					</div>
+				</div>
+			</div>
+	<!-- Gallery -->
+
+	<div class="gallery">
+		<div class="gallery_slider_container">
+
+
+			<!-- Gallery Slider -->
+			<div class="owl-carousel owl-theme gallery_slider">
+
+				<!-- Slide -->
+				<div class="owl-item gallery_item">
+					<a class="colorbox" href="https://thumbs.dreamstime.com/b/empty-bus-interior-14518135.jpg">
+						<div class="background_image" style="background-image:url(https://thumbs.dreamstime.com/b/empty-bus-interior-14518135.jpg)"></div>
+					</a>
+					<div class="gallery_overlay trans_200 d-flex flex-column align-items-center justify-content-center"><div>+</div></div>
+				</div>
+
+				<!-- Slide -->
+				<div class="owl-item gallery_item">
+					<a class="colorbox" href="https://www.beyourparty.com/wp-content/uploads/2021/07/bus.jpeg">
+						<div class="background_image" style="background-image:url(https://www.beyourparty.com/wp-content/uploads/2021/07/bus.jpeg)"></div>
+					</a>
+					<div class="gallery_overlay trans_200 d-flex flex-column align-items-center justify-content-center"><div>+</div></div>
+				</div>
+
+				<!-- Slide -->
+				<div class="owl-item gallery_item">
+					<a class="colorbox" href="https://img5.goodfon.com/wallpaper/nbig/b/c4/temsa-maraton-coach-bus-1.jpg">
+						<div class="background_image" style="background-image:url(https://img5.goodfon.com/wallpaper/nbig/b/c4/temsa-maraton-coach-bus-1.jpg)"></div>
+					</a>
+					<div class="gallery_overlay trans_200 d-flex flex-column align-items-center justify-content-center"><div>+</div></div>
+				</div>
+
+				<!-- Slide -->
+				<div class="owl-item gallery_item">
+					<a class="colorbox" href="https://img.freepik.com/premium-photo/young-girl-sitting-bus-listening-music_232070-2940.jpg">
+						<div class="background_image" style="background-image:url(https://img.freepik.com/premium-photo/young-girl-sitting-bus-listening-music_232070-2940.jpg)"></div>
+					</a>
+					<div class="gallery_overlay trans_200 d-flex flex-column align-items-center justify-content-center"><div>+</div></div>
+				</div>
+
+				<!-- Slide -->
+				<div class="owl-item gallery_item">
+					<a class="colorbox" href="https://live.staticflickr.com/65535/35734028431_68f2b7cba6_b.jpg">
+						<div class="background_image" style="background-image:url(https://live.staticflickr.com/65535/35734028431_68f2b7cba6_b.jpg)"></div>
+					</a>
+					<div class="gallery_overlay trans_200 d-flex flex-column align-items-center justify-content-center"><div>+</div></div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- Newsletter -->
+
+	<div class="newsletter">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="section_title_container_2">
+						<div class="section_title"><h1>Our Newsletter</h1></div>
+					</div>
+				</div>
+			</div>
+			<div class="row newsletter_row">
+
+				<!-- Newsletter Content -->
+				<div class="col-lg-6">
+					<div class="newsletter_content">
+						<div class="newsletter_text">
+                            <p>Subscribe our newsletter to receive the latest news and exclusive offers every week.No spam.</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Newsletter Form -->
+				<div class="col-lg-6 newsletter_col">
+					<form action="{% url 'index' %}" class="newsletter_form" id="newsletter_form" method="post">
+                        {% csrf_token %}
+{#						<input type="email" class="newsletter_input" placeholder="Your email" required="required">#}
+                        {{ subscription.email }}
+                        {% for error in subscription.email.errors %}
+                            <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 14px;">{{ error }}</p>
+                        {% endfor %}
+                            <button class="newsletter_button" type="submit">subscribe</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Contact -->
+
+	<div class="contact">
+		<div class="container">
+			<div class="row">
+
+				<!-- Contact Map -->
+				<div class="col-xl-6">
+					<div class="contact_map_container">
+
+						<!-- Contact Map -->
+						<div class="contact_map">
+
+							<!-- Google Map -->
+							<div class="map mt-5">
+								<div id="google_map" class="google_map">
+									<div class="map_container">
+										<img src="https://cdn.autopapo.com.br/box/uploads/2019/04/24111118/musica-no-onibus-celular-transporte-publico-shutterstock.jpg" class="w-100">
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+
+					</div>
+				</div>
+
+				<!-- Contact Form -->
+				<div class="col-xl-6 contact_col">
+					<div class="contact_form_container">
+						<div class="section_title_container_2">
+							<div class="section_title"><h1>Feed Back form</h1></div>
+							  <div class="section_text">we would love to hear your thoughts,suggestions,concerns or problems with anything so we can improvel.</div>
+						</div>
+						<form action="{% url 'index' %}" method="post" class="contact_form" id="contact_form">
+                            {% csrf_token %}
+							<div class="row contact_row">
+								<div class="col-md-6">
+{#                                    <input type="text" class="contact_input" placeholder="Name" required="required">#}
+                                    <span>First name</span>
+                                    {{ feed_back.first_name }}
+                                     {% for error in feed_back.first_name.errors %}
+                                        <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 14px;">{{ error }}</p>
+                                     {% endfor %}
+                                </div>
+								<div class="col-md-6">
+{#                                    <input type="email" class="contact_input" placeholder="E-mail" required="required">#}
+                                    <span>Last name</span>
+                                    {{ feed_back.last_name }}
+                                    {% for error in feed_back.last_name.errors %}
+                                        <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 14px;">{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+							</div>
+							<div>
+{#                               <textarea class="contact_input contact_textarea" placeholder="Message" required="required"></textarea>#}
+                                <span>Message</span>
+                                {{ feed_back.message }}
+                                {% for error in feed_back.message.errors %}
+                                    <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 14px;">{{ error }}</p>
+                                {% endfor %}
+
+                            </div>
+							<button class="contact_button" type="submit">send message</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,246 @@
+{% extends 'Administration/base.html' %}
+{% block Title %}
+    News and Updates
+{% endblock %}
+{% load  static %}
+{% block link %}
+     <link rel="stylesheet" href="{% static 'style/card_style.css' %}">
+    <script>
+
+
+    var feed_pop = {{ feed_back_popup | safe }}
+    var in_data = '{{ inquiry_data }}'
+
+     window.setTimeout(function() {
+        $(".alert").fadeTo(500, 0).slideUp(500, function(){
+            $(this).remove();
+        });
+    }, 1000);
+
+
+    $(document).ready(function () {
+        $("button[name='view_btn']").click(function () {
+            var nn = this.id
+
+            for(let i =0; i < 10; i++){
+                {#$("#inq_data").html( 'o')#}
+                /*
+                if(nn === parseInt(feed_pop[i].feed_back_id)){
+                    $("#inq_data").html(feed_pop[i])
+                }*/
+            }
+
+        })
+         $('.del').click(function() {
+          const buttonId = $(this).attr('id');
+          console.log(buttonId);
+          $('#del_feedback').val(buttonId)
+        });
+
+        $('.mgs_one').click(function() {
+          const buttonId = $(this).val()
+            const review_id = $(this).attr('id');
+          console.log(buttonId);
+          console.log(review_id);
+          $('#inq_data_one').html(buttonId)
+            $('#feedback_reviewed').val(review_id)
+        });
+    })
+    </script>
+    <style>
+        table.fixed {table-layout:fixed; width:100%;}/*Setting the table width is important!*/
+        table.fixed td {overflow:hidden;}/*Hide text outside the cell.*/
+        table.fixed td:nth-of-type(1) {width:200px;}/*Setting the width of column 1.*/
+        table.fixed td:nth-of-type(2) {width:300px;}/*Setting the width of column 2.*/
+        table.fixed td:nth-of-type(3) {width:300px;}/*Setting the width of column 3.*/
+    </style>
+{% endblock %}
+
+{% block main %}
+
+              <div class="col grid-margin stretch-card">
+
+                <div class="card">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-success" role="alert">
+                                <span aria-hidden="true"><i class="bi bi-check2-circle"></i></span>
+                                {{ message }}
+                            </div>
+                         {% endfor %}
+                    {% endif %}
+
+                  <div class="card-body">
+                    <div class="container text-center">
+                                <div class="row">
+                                    <div class="col-md-4 col-xl-3">
+                                        <div class="card bg-c-blue order-card">
+                                            <div class="card-block">
+                                                <h6 class="m-b-20">Total Inquiry</h6>
+                                                <h2 class="text-right"><i class="fa fa-cart-plus f-left"></i><span>{{ total }}</span></h2>
+<!--                                                <p class="m-b-0">Completed Orders<span class="f-right">351</span></p>-->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-xl-3">
+                                        <div class="card bg-c-green order-card">
+                                            <div class="card-block">
+                                                <h6 class="m-b-20">Pending Inquiry</h6>
+                                                <h2 class="text-right"><i class="fa fa-rocket f-left"></i><span>{{ total_pending }}</span></h2>
+<!--                                                <p class="m-b-0">Completed Orders<span class="f-right">351</span></p>-->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-xl-3">
+                                        <div class="card bg-c-yellow order-card">
+                                            <div class="card-block">
+                                                <h6 class="m-b-20">Reviewed Inquiry</h6>
+                                                <h2 class="text-right"><i class="fa fa-refresh f-left"></i><span>{{ total_complete }}</span></h2>
+<!--                                                <p class="m-b-0">Completed Orders<span class="f-right">351</span></p>-->
+                                            </div>
+                                        </div>
+                                    </div>
+
+<!--                                    <div class="col-md-4 col-xl-3">-->
+<!--                                        <div class="card bg-c-pink order-card">-->
+<!--                                            <div class="card-block">-->
+<!--                                                <h6 class="m-b-20">Reviewed Inquiry</h6>-->
+<!--                                                <h2 class="text-right"><i class="fa fa-credit-card f-left"></i><span>not sure</span></h2>-->
+<!--                                                <p class="m-b-0">Completed Orders<span class="f-right">351</span></p>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+                                </div>
+                            </div>
+
+                        <ul class="nav justify-content-end m-5">
+                            <li class="nav-item">
+                            <h4 class="nav-link active" aria-current="page" href="#">Filter By</h4>
+                          </li>
+                            <li class="nav-item">
+                            <a class="nav-link " aria-current="page" href="{% url 'inquiry' %}">All</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link " aria-current="page" href="?inquiry_data=0">Pending</a>
+                          </li>
+{#                            <li class="nav-item">#}
+{#                            <a class="nav-link " aria-current="page" href="?inquiry_data=1">Completed</a>#}
+{#                          </li>#}
+{##}
+{#                            <li class="nav-item">#}
+{#                            <a class="nav-link " aria-current="page" href="?ticket_pending=2">Delete</a>#}
+{#                          </li>#}
+                            <li class="nav-item">
+                            <a class="nav-link " aria-current="page" href="?inquiry_data=1">Reviewed</a>
+                          </li>
+{#                          <li class="nav-item">#}
+{#                            <a class="nav-link" href="#">Alphabetic order</a>#}
+{#                          </li>#}
+                        </ul>
+                    <h4 class="card-title">Feedback Details</h4>
+
+                    </p>
+                    <table class="table table-hover fixed">
+                      <thead>
+                        <tr>
+                          <th>User</th>
+                          <th>Inquiry</th>
+                          <th>Date</th>
+                          <th>Status</th>
+                          <th>Reviewed</th>
+                           <th>Delete</th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {%  for feed_back in inquiry_data %}
+                        <tr>
+                          <td>
+                              <img src="{% static 'images/faces-clipart/pic-3.png' %}" class="me-2" alt="image"> Anonymous User
+                          </td>
+                          <td id="{{ feed_back.feed_back_id }}" name="mgs">{{ feed_back.message }}</td>
+                          <td class="text-danger">{{feed_back.message_date}}</td>
+                            {% if feed_back.message_status == 0 %}
+                                <td><label class="badge badge-danger">Pending</label></td>
+                            {% elif feed_back.message_status == 1 %}
+                                <td><label class="badge badge-success">Reviewed</label></td>
+                            {% endif %}
+
+                            <td class="text-center">
+                                 <button type="button" class="btn btn-outline-primary btn-sm align-center mgs_one" value="{{ feed_back.message }}" data-bs-toggle="modal" id="{{ feed_back.feed_back_id }}" name="view_btn" data-bs-target="#view">View</button>
+{#                                 <button type="button" class="btn btn-outline-primary btn-sm align-center"  id="{{ feed_back.feed_back_id }}">View</button>#}
+                            </td>
+{#                            <td> <button class="btn-sm bg-primary text-white" type="button" id="{{ feed_back.feed_back_id }}" style=""> View </button> </td>#}
+
+                            <td> <a class="btn btn-outline-danger btn-sm align-center del"  id="{{ feed_back.feed_back_id }}" data-toggle="modal" data-target="#delete"> Delete </a> </td>
+                        </tr>
+
+                      {% endfor %}
+
+                        <!-- Button trigger modal -->
+
+
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="view" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">FeedBack Details.</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                                <form action="{% url 'review' %}" method="post">
+                                    {% csrf_token %}
+                                      <div class="modal-body">
+                                            <p id=""><span id="inq_data_one"> </span></p>
+                                            {{ feedback_reviewd.feedback_reviewed }}
+                                      </div>
+                                      <div class="modal-footer">
+                                          <button type="submit" class="btn btn-primary">Make as Read</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                                    </div>
+                             </form>
+                            </div>
+                          </div>
+                        </div>
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+              </div>
+
+                        <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-sm">
+                        <div class="modal-content p-3">
+                            <form method="post" action="">
+                                {% csrf_token %}
+                              <p class="display-1 text-center"><i class="bi bi-x-octagon text-danger"></i></p>
+                                <p class="h4 text-center display-4">Are you sure?  </p>
+                                <p class="h6 small text-center" style="color: #C1C1C1;">Do you Really want to delete this records? <span id="bus_id"> </span> <br> This process can't be undone. <span id="bus_id"> </span> </p>
+                            <div class="row">
+{#                                <input name="del_val" type="hidden">#}
+                                {{ feedback_del.del_feedback}}
+                                <div class="col-6">
+                                    <button name="sub" type="submit" class="btn btn-outline-danger">Delete</button>
+
+                                </div>
+                                <div class="col-6">
+                                    <button name="cancel" type="button"  data-dismiss="modal" class="btn btn-outline-primary">Cancel</button>
+                                </div>
+
+                                </form>
+                            </div>
+                        </div>
+                      </div>
+
+
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

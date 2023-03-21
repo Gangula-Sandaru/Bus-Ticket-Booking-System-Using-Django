@@ -1,0 +1,97 @@
+{% extends 'Administration/base.html' %}
+{% block Title %}
+    News and Updates
+{% endblock %}
+{% load  static %}
+{% block link %}
+    <script>
+    $(document).ready(function () {
+        $("button[name='view_btn']").click(function () {
+            $("#inq_data").html("{{ message }}")
+        })
+    })
+    </script>
+{% endblock %}
+
+{% block main %}
+
+              <div class="col grid-margin stretch-card">
+
+                <div class="card">
+                  <div class="card-body">
+                        <ul class="nav justify-content-end">
+                            <li class="nav-item">
+                            <h4 class="nav-link active" aria-current="page">Filter By</h4>
+                          </li>
+                            <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{% url 'inquiry' %}">All</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link " aria-current="page" href="{% url 'pending_filter' %}">Pending</a>
+                          </li>
+                            <li class="nav-item">
+                            <a class="nav-link " aria-current="page" href="#">Completed</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="#">Date order</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="#">Alphabetic order</a>
+                          </li>
+                        </ul>
+                    <h4 class="card-title">Hoverable Table</h4>
+                    <p class="card-description"> Add class <code>.table-hover</code>
+                    </p>
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>User</th>
+                          <th>Inquiry</th>
+                          <th>Date</th>
+                          <th>Status</th>
+                          <th>Reviewed</th>
+                           <th>Delete</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {%  for feed_back in feed %}
+                        <tr>
+                          <td>
+                              <img src="{% static 'images/faces-clipart/pic-3.png' %}" class="me-2" alt="image"> Anonymous User
+                          </td>
+                          <td id="{{ feed_back.feed_back_id }}" name="mgs">{{ feed_back.message }}</td>
+                          <td class="text-danger">{{feed_back.message_date}}</td>
+                            {% if feed_back.message_status == 0 %}
+                                <td><label class="badge badge-danger">Pending</label></td>
+                            {% elif feed_back.message_status == 1 %}
+                                <td><label class="badge badge-success">Completed</label></td>
+                            {% endif %}
+
+                            <td class="text-center">
+{#                                 <button type="button" class="btn-sm btn-primary" data-bs-toggle="modal" id="{{ feed_back.feed_back_id }}" name="view_btn" data-bs-target="#view">View</button>#}
+                                 <button type="button" class="btn-sm btn-primary"  id="{{ feed_back.feed_back_id }}">View</button>
+                            </td>
+{#                            <td> <button class="btn-sm bg-primary text-white" type="button" id="{{ feed_back.feed_back_id }}" style=""> View </button> </td>#}
+
+                            <td> <a class="btn-sm bg-danger text-white" href="{% url 'inquiry_delete' feed_back.feed_back_id %}" id="{{ feed_back.feed_back_id }}" style=""> Delete </a> </td>
+                        </tr>
+
+
+                        <!-- Button trigger modal -->
+
+
+                      {% endfor %}
+
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

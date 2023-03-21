@@ -1,0 +1,265 @@
+@charset "utf-8";
+
+/*  1. 1600px */
+
+@media only screen and (max-width: 1600px)
+{
+	
+}
+
+/* 2. 1440px */
+
+@media only screen and (max-width: 1440px)
+{
+	
+}
+
+/* 3. 1380px */
+
+@media only screen and (max-width: 1380px)
+{
+	
+}
+
+/* 3. 1280px */
+
+@media only screen and (max-width: 1280px)
+{
+	
+}
+
+/* 4. 1199px */
+
+@media only screen and (max-width: 1199px)
+{
+	.logo
+	{
+		position: relative;
+		left: auto;
+		top: auto;
+		-webkit-transform: translateY(5px);
+		-moz-transform: translateY(5px);
+		-ms-transform: translateY(5px);
+		-o-transform: translateY(5px);
+		transform: translateY(5px);
+	}
+	.main_nav
+	{
+		margin-left: 80px;
+	}
+	.main_nav ul li:not(:last-of-type)
+	{
+		margin-right: 20px;
+	}
+	.main_nav ul li a
+	{
+		font-size: 15px;
+	}
+	.book_button
+	{
+		width: 121px;
+	}
+	.phone
+	{
+		font-size: 14px;
+	}
+	.phone i
+	{
+		font-size: 20px;
+	}
+	.search_box_container
+	{
+		padding-left: 45px;
+		padding-right: 40px;
+	}
+	
+}
+
+/* 4. 1100px */
+
+@media only screen and (max-width: 1100px)
+{
+	
+}
+
+/* 5. 1024px */
+
+@media only screen and (max-width: 1024px)
+{
+	
+}
+
+/* 6. 991px */
+
+@media only screen and (max-width: 991px)
+{
+	.main_nav,
+	.header_extra
+	{
+		display: none !important;
+	}
+	.hamburger
+	{
+		display: block;
+	}
+	.search_box_container
+	{
+		height: auto;
+		padding-top: 40px;
+		padding-bottom: 40px;
+	}
+	.search_form_list
+	{
+		width: 100%;
+	}
+	.search_form_list > li
+	{
+		width: 50%;
+		margin-bottom: 15px;
+	}
+	.search_form_list > li:not(:last-child)
+	{
+		border-right: none;
+	}
+	.search_form_list > li:nth-child(odd)
+	{
+		border-right: solid 2px #d1d1d1;
+	}
+	.bp_date
+	{
+		margin-top: 25px;
+	}
+	
+}
+
+/* 7. 959px */
+
+@media only screen and (max-width: 959px)
+{
+	
+}
+
+/* 8. 880px */
+
+@media only screen and (max-width: 880px)
+{
+	
+}
+
+/* 9. 768px */
+
+@media only screen and (max-width: 768px)
+{
+	
+}
+
+/* 10. 767px */
+
+@media only screen and (max-width: 767px)
+{
+	.home_title h1
+	{
+		font-size: 56px;
+	}
+	.home_text
+	{
+		font-size: 14px;
+		max-width: 100%;
+	}
+	
+}
+
+/* 11. 575px */
+
+@media only screen and (max-width: 575px)
+{
+	p
+	{
+		font-size: 14px;
+	}
+	.home
+	{
+		height: 75vh;
+	}
+	.menu_nav_list li a
+	{
+		font-size: 36px;
+	}
+	.section_title h1
+	{
+		font-size: 36px;
+	}
+	.section_text
+	{
+		font-size: 14px;
+	}
+	.button
+	{
+		width: 140px;
+		height: 50px;
+	}
+	.button a
+	{
+		font-size: 12px;
+		line-height: 50px;
+	}
+	.home_title h1
+	{
+		font-size: 48px;
+	}
+	.search_box_container
+	{
+		width: 100%;
+		left: auto;
+		margin-top: -100px;
+	}
+	.search_form_list > li
+	{
+		width: 100%;
+		height: 53px;
+	}
+	.search_form_list > li:nth-child(odd)
+	{
+		border-right: none;
+	}
+	.search_button
+	{
+		width: 152px;
+		height: 53px;
+		font-size: 12px;
+		margin-top: 6px;
+	}
+	.bp_date a
+	{
+		font-size: 14px;
+	}
+	
+}
+
+/* 11. 539px */
+
+@media only screen and (max-width: 539px)
+{
+	
+}
+
+/* 12. 480px */
+
+@media only screen and (max-width: 480px)
+{
+	
+}
+
+/* 13. 479px */
+
+@media only screen and (max-width: 479px)
+{
+	
+}
+
+/* 14. 400px */
+
+@media only screen and (max-width: 400px)
+{
+	
+}

@@ -1,0 +1,78 @@
+body{
+    margin-top:10px;
+    background:#dcdcdc
+}
+
+.widget-signups__list {
+    text-align: center
+}
+
+.widget-signups__list>a {
+    vertical-align: top;
+    margin: 4px 2px;
+    display: inline-block
+}
+
+.widget-signups__list .avatar-char {
+    background-color: #eee;
+    color: #000
+}
+
+.widget-signups__list .avatar-char,
+.widget-signups__list .avatar-img {
+    margin: 0
+}
+
+.avatar-img {
+    border-radius: 2px;
+    width: 3rem;
+    height: 3rem;
+    margin-right: 1.2rem;
+}
+
+.avatar-char {
+    line-height: 2.9rem;
+    font-size: 1.2rem;
+    text-align: center;
+    font-style: normal;
+}
+
+.avatar-char, .avatar-img {
+    border-radius: 2px;
+    width: 3rem;
+    height: 3rem;
+    margin-right: 1.2rem;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    line-height: 140%;
+    margin-top: -5px;
+}
+
+.card-title {
+    margin-bottom: 2.1rem;
+}
+
+.card-subtitle:not(:last-child) {
+    margin-bottom: 2rem;
+}
+
+.card-subtitle {
+    font-size: 1rem;
+    font-weight: 400;
+    margin-top: -1.45rem;
+    line-height: 1.5;
+}
+
+/* this is user form */
+
+.card-registration .select-input.form-control[readonly]:not([disabled]) {
+font-size: 1rem;
+line-height: 2.15;
+padding-left: .75em;
+padding-right: .75em;
+}
+.card-registration .select-arrow {
+top: 13px;
+}

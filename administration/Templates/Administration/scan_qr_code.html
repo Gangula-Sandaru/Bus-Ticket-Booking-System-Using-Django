@@ -1,0 +1,153 @@
+{% extends 'Administration/base.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+
+{% block link %}
+    <script src="{% static 'js/html5-qrcode.min.js' %}"></script>
+{#    <script src=""></script>#}
+
+    <style>
+
+    </style>
+    <script>
+
+        $(document).ready(function(){
+            var n = $("button").addClass("btn  border-success")
+            var downtitle = $('#reader__dashboard_section_swaplink').addClass('small text-decoration-none')
+            {#var dropdown = $('#reader__camera_selection').addClass('form-select form-select-sm')#}
+            console.log(n)
+
+            /*
+            setInterval(function () {
+
+
+            $.ajax({
+                type: "POST",
+                url: "{% url 'scan_qr_code' %}",
+                data: ,
+
+                success: function (response) {
+
+                },
+                error: function (response) {
+
+                }
+            })
+
+            },1000)    */
+
+        });
+    </script>
+
+{% endblock %}
+
+{% block main %}
+    <div class="container mt-5">
+        <h1 class="display-4 align-items-center mb-5">Scan Your QR Code here</h1>
+
+
+        <div class="row">
+          <div class="col-6">
+            <div style="width:500px;" id="reader"></div>
+          </div>
+          <div class="col-6">
+              <div class="container-fluid">
+                <div class="card text-dark bg-light mb-3" >
+                  <div class="card-header text-center"> Scanned Result</div>
+                  <div class="card-body" >
+{#                    <h5 class="card-title">Light card title</h5>#}
+                    <p class="card-text " id="result"></p>
+                    <p class="card-text " id="result2"></p>
+                    <p class="card-text " id="result4"></p>
+                    <p class="card-text " id="result3"></p>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+
+
+<script type="text/javascript">
+
+
+
+
+        function onScanSuccess(qrCodeMessage) {
+
+
+
+
+
+            $.ajax({  // send the qr code to the database
+                type: "POST",
+                url: "{% url 'scan_qr_code' %}",
+                data: { "scanned_ticket": qrCodeMessage, "csrfmiddlewaretoken" : "{{csrf_token}}"},
+
+                success: function (response) {
+                    console.log(response)
+
+                },
+                error: function (response) {
+                    console.log(response)
+                }
+            })
+
+
+            $.ajax({  // get from the database
+                type: "GET",
+                url: "{% url 'qr_ajax_calls' %}",
+                success: function (response) {
+                    {#const re1 = -1;#}
+                    for (const i in response){
+                        const re1 = parseInt(response.status)
+                        const re_no = parseInt(response.ticket_no)
+                        console.log(re_no)
+                        if  (re1 === 1) {
+                            console.log(re1)
+                            document.getElementById('result').innerHTML = '<span class="result">Thank you, your ticket has been approved!</span>';
+                          /*  document.getElementById('result2').innerHTML = '<span class="result">Your Ticket Number is: ' + re_no + '</span>';*/
+                            document.getElementById('result3').innerHTML = '<span class="result">Your Ticket invoice Number is: ' + qrCodeMessage + '</span>';
+
+                        }
+                        else if (re1 === 0){
+                            document.getElementById('result').innerHTML = '<span class="result text-danger">Sorry, Your Ticket is Invalid!</span>';
+                            document.getElementById('result2').innerHTML = '';
+                            document.getElementById('result3').innerHTML = '<span class="result">Your Ticket invoice Number is: ' + qrCodeMessage + '</span>';
+
+
+
+
+                        }
+                        console.log(qrCodeMessage)
+                    }
+
+                },
+                error: function (response) {
+                    console.log(response)
+                }
+            })
+
+
+
+
+        }
+
+        function onScanError(errorMessage) {
+          //handle scan error
+        }
+
+        var html5QrcodeScanner = new Html5QrcodeScanner(
+            "reader", { fps: 10, qrbox: 250 });
+        html5QrcodeScanner.render(onScanSuccess, onScanError);
+
+
+
+</script>
+
+    </div>
+
+{% endblock %}
+
+{% block js %}
+{% endblock %}

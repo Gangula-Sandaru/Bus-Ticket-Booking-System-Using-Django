@@ -1,0 +1,144 @@
+{% extends 'Administration/base.html' %}
+
+{% load static %}
+
+{% block title %}
+{% endblock %}
+
+{% block link %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style/mail_loader.css' %}">
+    <script>
+        {#$(".load-animation").hide()#}
+        $(document).ready(function (e) {
+
+            {#$(".load-animation").hide()#}
+            $(".subid").click(function () {
+                {#$(".mail_form").hide()#}
+                $("#visble").addClass('d-none')
+                {#$(".load-animation").show()#}
+                $(".load-animation").removeClass('d-none')
+            })
+        })
+    </script>
+    <style>
+    .django-ckeditor-widget{
+          width: 100%;
+        }
+    </style>
+{% endblock %}
+
+{% block main %}
+    <div class="main-panel">
+     <div class="container-scroller">
+      <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="content-wrapper d-flex align-items-center auth">
+          <div class="row flex-grow">
+            <div class="col-lg-8  mx-auto ">
+              <div class="auth-form-light text-left p-5 border-top border-4 border-dark  mail_form" id="visble">
+                <div class="brand-logo d-flex">
+                    <div class="col-8">
+                        <p class="display-3">Send updated news</p>
+                    </div>
+                    <div class="col-4 text-end">
+                        <p> <img  src="https://cdn.dribbble.com/users/87229/screenshots/2190376/sendmail.gif"> </p>
+                    </div>
+
+
+                </div>
+                  <div class="card ">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+{#                                {{ message }}#}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                             </div>
+                         {% endfor %}
+                    {% endif %}
+
+
+                    <form class="forms-sample " method="post" action="{%  url 'news latter and update' %}" id="">
+                 {% csrf_token %}
+
+{#                       <h1 class="mb-3 mb-5 display-3" style="color: #b0b3b9; text-decoration: underline"></h1>#}
+                      <div class="form-group">
+
+
+                          {{ newsform.subject }}
+                            <p style="font-size: 13px;">Please enter subject of the mail.</p>
+                          {% for error in newsform.subject.errors %}
+                                <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 13px;">{{ error }}</p>
+                          {% endfor %}
+                      </div>
+
+                        <label for="exampleInputName1" class="mb-3">Message Body:</label>
+                        <div class="form-group mail_field align-items-center" id="">
+
+                            {{ newsform.media }}
+                            {{ newsform.edit}}
+                                {% for error in newsform.edit.errors %}
+                                    <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 15px;">{{ error }}</p>
+                                {% endfor %}
+                      </div>
+
+                        <div class="text-center">
+                      <button type="submit" id="" class="btn btn-gradient-primary me-2 subid">Send</button>
+{#                      <button class="btn btn-light">Cancel</button>#}
+                        </div>
+
+{#                      <form class="text-center">#}
+{#                          <div class="form-group w-50">#}
+{#                            <label for="formGroupExampleInput">Example label</label>#}
+{#                            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">#}
+{#                          </div>#}
+{#                          <div class="form-group w-50">#}
+{#                            <label for="formGroupExampleInput2">Another label</label>#}
+{#                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">#}
+{#                          </div>#}
+
+                 <div class="text-center pt-3">
+                     <label class="form-check-label pt-3 text-center" for="agree" style="font-size: 13px;">QuickBooking.lk <a href="#"> privacy policy </a> and <a href="#">terms and conditions</a></label>
+                </div>
+                 </form>
+
+
+
+
+
+                  </div>
+                </div>
+                <div class="bg-white p-5 load-animation d-none" style="width: 500px; height: 500px; text-align: center;margin: auto">
+                    <div style=" text-align: center">
+                        <img src="https://thumbs.gfycat.com/NegligiblePaltryCorydorascatfish-max-1mb.gif" style="height: 200px; width: 300px">
+                    </div>
+
+                    <div class="">
+                    <div style="text-align: center">
+                        <img src="https://i.pinimg.com/originals/24/07/b5/2407b512f6f2eec61cd2f3136242a025.gif" style="height: 180px; width: 280px">
+                        <p class="display-5">Sending...</p>
+                    </div>
+
+                    </div>
+{#             <div class="load-animation " style="padding-left: 50px">#}
+{#                        <figure>#}
+{#                            <div class="dot white"></div>#}
+{#                            <div class="dot"></div>#}
+{#                            <div class="dot"></div>#}
+{#                            <div class="dot"></div>#}
+{#                            <div class="dot"></div>#}
+{#                        </figure>#}
+{#                    </div>#}
+
+             </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+
+{% endblock %}
+
+{% block js %}
+{% endblock %}

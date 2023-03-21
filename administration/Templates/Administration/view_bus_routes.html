@@ -1,0 +1,236 @@
+{% extends 'Administration/base.html' %}
+{% block Title %}
+    News and Updates
+{% endblock %}
+{% load  static %}
+{% block link %}
+
+     <link rel="stylesheet" href="{% static 'style/card_style.css' %}">
+    <script>
+     window.setTimeout(function() {
+        $(".alert").fadeTo(500, 0).slideUp(500, function(){
+            $(this).remove();
+        });
+    }, 1000);
+
+    $(document).ready(function () {
+        $('.del').click(function() {
+          const buttonId = $(this).attr('id');
+          console.log(buttonId);
+          $('#del_route').val(buttonId)
+        });
+    })
+    </script>
+{% endblock %}
+
+{% block main %}
+
+              <div class="col grid-margin stretch-card">
+
+                 <div class="card">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-success" role="alert">
+                                <span aria-hidden="true"><i class="bi bi-check2-circle"></i></span>
+                                {{ message }}
+                            </div>
+                         {% endfor %}
+                    {% endif %}
+
+                <div class="card">
+                  <div class="card-body">
+                    <div class="container">
+                               <div class="row">
+
+                                   <div class="col-md-4 col-xl-3">
+                                        <div class="card bg-c-green order-card">
+                                            <div class="card-block">
+                                                <h6 class="m-b-20 text-center">Total Routes</h6>
+                                                <h2 class="text-right text-center"><i class="fa fa-rocket f-left"></i><span>{{ total_route }}</span></h2>
+                                                <p class="m-b-0 text-center">Shows the total routes of the system.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-xl-3">
+                                        <div class="card bg-c-blue order-card">
+{#                                            <div class="card-block">#}
+{#                                                <h6 class="m-b-20  text-center">Total Buses</h6>#}
+{#                                                <h2 class="text-center m-b-0"><i class="fa fa-cart-plus f-left"></i><span>{{ total_b}}</span></h2>#}
+{#                                                <p class="m-b-0 text-center">Shows the Total bus in the system.</p>#}
+{#                                            </div>#}
+                                            <div class="card-block">
+                                                <h6 class="m-b-20 text-center">Total Buses</h6>
+                                                <h2 class="text-right text-center"><i class="fa fa-rocket f-left"></i><span>{{ total_b }}</span></h2>
+                                                <p class="m-b-0 text-center">Shows the total buses in the system.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-md-4 col-xl-3">
+                                        <div class="card bg-c-yellow order-card">
+                                            <div class="card-block">
+                                                <h6 class="m-b-20 text-center">Available Bus</h6>
+                                                <h2 class="text-right text-center"><i class="fa fa-refresh f-left"></i><span>{{ available }}</span></h2>
+                                                <p class="m-b-0 text-center">Shows the Available bus in the system.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-xl-3">
+                                        <div class="card bg-c-pink order-card">
+                                            <div class="card-block">
+                                                <h6 class="m-b-20 text-center">Not Available Bus</h6>
+                                                <h2 class="text-right text-center"><i class="fa fa-credit-card f-left"></i><span>{{ not_available_bus }}</span></h2>
+                                                <p class="m-b-0 text-center">Shows the Available Routes in the system.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <ul class="nav justify-content-end m-5">
+                            <li class="nav-item">
+                            <h4 class="nav-link active" aria-current="page" href="#">Filter By</h4>
+                          </li>
+                            <li class="nav-item">
+                            <a class="nav-link " aria-current="page" href="{% url 'view bus routes' previous_id  %}">All</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link " aria-current="page" href="?route_status=1">Available</a>
+                          </li>
+                            <li class="nav-item">
+                            <a class="nav-link " aria-current="page" href="?route_status=0">Not Available</a>
+                          </li>
+
+{#                            <li class="nav-item">#}
+{#                            <a class="nav-link " aria-current="page" href="?ticket_pending=2">Delete</a>#}
+{#                          </li>#}
+{#                            <li class="nav-item">#}
+{#                            <a class="nav-link " aria-current="page" href="?ticket_pending=3">Reviewed</a>#}
+{#                          </li>#}
+{#                          <li class="nav-item">#}
+{#                            <a class="nav-link" href="#">Alphabetic order</a>#}
+{#                          </li>#}
+                        </ul>
+{#                     <form class="d-flex m-5" method="post" action="{% url 'view bus routes' previous_id %}">#}
+{#                         {% csrf_token %}#}
+{#                          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">#}
+{#                            {{ bus_Reg_from.search_from }}#}
+{#                            <button class="btn btn-outline-success" type="submit">Search</button>#}
+{#                     </form>#}
+                    <h4 class="card-title">Bus Details</h4>
+
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Number plate</th>
+                          <th>Route No</th>
+                          <th>Departure</th>
+                          <th>Arrival</th>
+                          <th>Departure Time</th>
+                           <th>Reg Date</th>
+                           <th>Distance</th>
+                           <th>Status</th>
+                           <th>Edit</th>
+                           <th>Delete </th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                      {%  for route in routes %}
+                        <tr>
+                          <td>
+                             {{ route.bus_plate_no }}
+                          </td>
+                          <td>{{route.route_no}}</td>
+                          <td> {{route.start_location}}</td>
+                          <td> {{ route.end_location }} </td>
+                          <td> {{ route.route_time }} </td>
+                          <td> {{ route.c_time }} </td>
+                          <td> {{ route.total_distance }} Km</td>
+                          <td>
+                                {% if route.route_status == 1 %}
+                                    Available
+
+                                {% else %}
+                                    Not Available
+                                {% endif %}
+                          </td>
+{#                            <td> <button class="btn-sm bg-primary text-white" type="button" id="{{ feed_back.feed_back_id }}" style=""> View </button> </td>#}
+                            <td> <a class="btn btn-outline-warning btn-sm align-center" href="{% url 'update bus routes' route.route_id %}" id="{{ bus.bus_plate_no}}" style=""> Edit </a> </td>
+                            <td>
+{#                                <a class="btn btn-outline-danger btn-sm align-center" href="" id="{{ bus.bus_plate_no}}" style=""> Delete </a> #}
+                                <button type="button" class="btn btn-outline-danger btn-sm align-center del" data-toggle="modal" data-target="#delete" id="{{ route.route_id}}">Delete</button>
+
+                            </td>
+
+                        </tr>
+
+                      {% endfor %}
+
+{#                        <!-- Button trigger modal -->#}
+{#                        <!-- Modal -->#}
+{#                        <div class="modal fade" id="view" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">#}
+{#                          <div class="modal-dialog">#}
+{#                            <div class="modal-content">#}
+{#                              <div class="modal-header">#}
+{#                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>#}
+{#                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>#}
+{#                              </div>#}
+{#                              <div class="modal-body">#}
+{#                                    <p id="inq_data"></p>#}
+{#                              </div>#}
+{#                              <div class="modal-footer">#}
+{#                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>#}
+{#                                <button type="button" class="btn btn-primary">Save changes</button>#}
+{#                              </div>#}
+{#                            </div>#}
+{#                          </div>#}
+{#                        </div>#}
+
+                      </tbody>
+                    </table>
+                 <!-- Button trigger modal -->
+
+
+                    <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-sm">
+                        <div class="modal-content p-3">
+                            <form method="post" action="">
+                                {% csrf_token %}
+                              <p class="display-1 text-center"><i class="bi bi-x-circle"></i></p>
+                                <p class="h4 text-center display-4">Are you sure?  </p>
+                                <p class="h6 small text-center" style="color: #C1C1C1;">Do you Really want to delete this records? <span id="bus_id"> </span> <br> This process can't be undone. <span id="bus_id"> </span> </p>
+                            <div class="row">
+{#                                <input name="del_val" type="hidden">#}
+                                {{ route_del.del_field }}
+                                <div class="col-6">
+                                    <button name="sub" type="submit" class="btn btn-outline-danger">Delete</button>
+
+                                </div>
+                                <div class="col-6">
+                                    <button name="cancel" type="button"  data-dismiss="modal" class="btn btn-outline-primary">Cancel</button>
+                                </div>
+
+                                </form>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+{#            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">Small modal</button>#}
+
+
+
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

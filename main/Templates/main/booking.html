@@ -1,0 +1,583 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    Booking
+{% endblock %}
+
+{% block link %}
+    {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/booking.css' %}">
+{#<link rel="stylesheet" type="text/css" href="{% static 'styles/booking_ticket.css' %}">#}
+{#<link rel="stylesheet" type="text/css" href="{% static 'styles/booking2.css' %}">#}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/booking_responsive.css' %}">
+    <style>
+        /* A.I  with Gangula*/
+        .green-glow { /* seat glow effect*/
+    padding: 10px 20px;
+          background: #ddd;
+          border: 1px solid #aaa;
+          border-radius: 5px;
+
+          color: #555;
+          cursor: pointer;
+          transition: all 0.3s ease-in-out;
+          box-shadow: 0 0 10px 5px rgba(0, 255, 0, 0.5);
+        }
+        .green-glow:hover  {
+  animation: pulse 1s linear infinite;
+  transition: transform 0.5s ease-in-out;
+  /* transform: rotate(10deg); */
+  background: #8bc34a;
+  border-color: #689f38;
+  color: #fff;
+  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Add a selected state to indicate the seat is reserved */
+.seat.selected {
+  background: #800080;
+  border-color: #c62828;
+  color: #fff;
+}
+
+/* Add a hover state to the selected seats to further distinguish them */
+.seat.selected:hover {
+  background: #800080;
+  border-color: #e53935;
+}
+
+
+
+.divider:after,
+.divider:before {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #eee;
+}
+.h-custom {
+    height: calc(100% - 73px);
+}
+
+@media (max-width: 450px) {
+    .h-custom {
+        height: 100%;
+    }
+}
+
+
+    </style>
+
+    <script>
+
+    var n = {{ json | safe }}
+    var routeID = '{{ route_id }}';
+    const routeTime = '{{ route_time }}'
+
+        setTimeout(function() {
+        $('.page-loader-overlay').hide();
+        }, 3000);
+
+
+    $(document).ready(function (){
+
+        for(var i = 0; i < n.length; i++){
+            console.log(routeTime + n[i].route_time_actual)
+            if(routeID === n[i].bus_plate_no_id && routeTime === n[i].route_time_actual ) { // this will color the seat according to booking status
+                var seat_no = n[i].seat_no
+                $("#" + seat_no).css("background-color", "red").attr("value", "1").attr("disabled","true").addClass('booked');
+            }
+
+        }
+
+        // Get all the seat elements
+            const seats = document.querySelectorAll('.seat');
+
+            // Add a click event listener to each seat element
+            seats.forEach(seat => {
+              seat.addEventListener('click', e => {
+                // Toggle the "selected" class on the seat element
+
+                    if (seat.classList.contains('booked')) {
+                      // Output a message to the console
+                        console.log("this is already booked")
+                    }
+                    else{
+                          // Update the selected seats list
+                    seat.classList.toggle('selected');
+                    updateSelectedSeats();
+                    }
+
+              });
+            });
+
+            // Define a function to update the selected seats list
+            function updateSelectedSeats() {
+              // Get the "selected-seats" span element
+              const selectedSeatsSpan = document.getElementById('selected-seats');
+
+
+              // Get all the selected seat elements
+              const selectedSeats = document.querySelectorAll('.seat.selected');
+
+              // Create an array to store the seat numbers
+              const seatNumbers = [];
+
+
+              // Iterate through the selected seats and add their seat numbers to the array
+              selectedSeats.forEach(seat => {
+                seatNumbers.push(seat.getAttribute('data-seat'));
+                      // Update the value of the seat field
+
+
+
+              });
+
+
+
+              // Update the "selected-seats" span element with the seat numbers
+              {#selectedSeatsSpan.innerHTML = seatNumbers.join(', ');#}
+
+              console.log(seatNumbers)
+                $('#seat').val(seatNumbers);
+              console.log(seatNumbers)
+                $(".submit").click(function (e){
+                    /*
+            for(var vl = 0; vl < seat_id_list.length; vl++){
+                console.log(seat_id_list[vl])
+
+            }*/
+
+            var seat_list = JSON.stringify(seatNumbers);
+
+
+            console.log(seat_list)
+
+            {#e.preventDefault()#}
+/*              removed this due to the new modification of the code
+             $.ajax({
+                method:"POST",
+                {#url:"/payment/",#}
+                url:"{% url 'booking' route_id.route_id %}",
+                dataType: 'json',
+                data:{"seat_list": seat_list ,"csrfmiddlewaretoken" : "{{csrf_token}}"}
+                })
+                .done(function (request) {
+                    console.log(request)
+                })
+                .fail(function (request) {
+                    console.log(request)
+
+                })
+                    */
+                })
+
+
+                if(seatNumbers){/*
+
+                    $('.cmbtn').click(function () {
+                        const id = $('#nic').val()
+                        const emailadd = $('#emailaddr').val()
+                        if (seatNumbers && id && emailadd){
+
+                             $('#reservationModal').show()
+                            $('.seat_l').html(seatNumbers + " ")
+
+                            $('#user_id').html(id)
+                            $('#eml_addr').html(emailadd)
+                        }
+                        else{
+                            $('#model-warning').removeClass('d-none')
+                        }
+
+
+                })
+*/
+
+/*
+                 $('#reservationForm').click(function(event) {
+                    // Prevent the default form submission action
+                    event.preventDefault();
+
+                    // Get the value of the seat field
+                    var seat = $('#seat').val();
+
+                    // Check if the form is valid and the seat field is not empty
+                    if (this.checkValidity() && seat !== '') {
+                      // Show the modal
+                      $('#reservationModal').modal('show');
+                    }
+                });
+
+*/
+                }
+
+
+            }
+
+
+
+    })
+
+
+
+        {#var value_of_seat = document.getElementsByName("seat");#}
+
+
+    </script>
+
+
+{% endblock %}
+
+{% block main %}
+
+<div class="super_container">
+
+    	<div class="home">
+		<div class="parallax_background parallax-window " data-parallax="scroll" data-image-src="https://www.setra-bus.com/content/dam/sbo/markets/common/models/cc-hd-models/images/teaser/EB29590-CC-HD-teaser-home-01.jpg" data-speed="0.8"></div>
+		<div class="home_container">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<div class="home_content text-center">
+							<div class="home_title"><h1>Booking</h1></div>
+							<div class="home_text"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Search Box -->
+
+	<div class="search_box">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="search_box_container d-flex flex-row align-items-center justify-content-start">
+						<div class="search_form_container">
+							<form action="{% url 'time table' %}" id="search_form" class="search_form" method="post">
+                                {% csrf_token %}
+								<div class="d-flex flex-lg-row flex-column align-items-center justify-content-start">
+									<ul class="search_form_list d-flex flex-row align-items-center justify-content-start flex-wrap">
+
+
+										<li>
+                                            <input type="text" class="search_dropdown d-flex flex-row align-items-center justify-content-start" name="start_location" placeholder="  Departure Location">
+										</li>
+										<li>
+											<input type="text" class="search_dropdown d-flex flex-row align-items-center justify-content-start" name="end_location" placeholder="  Arrival Location">
+
+										</li>
+										<li>
+											<input type="date" class="search_dropdown d-flex flex-row align-items-center justify-content-start" name="date"  placeholder="  Date">
+
+										</li>
+										<li>
+											<input type="time" class="search_dropdown d-flex flex-row align-items-center justify-content-start"  name="route_time" placeholder="  Time">
+
+										</li>
+										<li>
+											<input type="text" class="search_dropdown d-flex flex-row align-items-start" placeholder="Route no (Optional)" name="route">
+
+										</li>
+									</ul>
+									<input class="search_button" type="submit" name="search" value="Search">
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<section class="container text-center">
+<p class="lead text-center pt-5"> <span class="-bold"> Welcome </span> to our seat selection page! Here, you can choose your preferred seat from the available options and proceed to the checkout to complete your booking.</p>
+ <img src="https://wikiclipart.com/wp-content/uploads/2016/12/School-bus-black-and-white-school-bus-side-view-clipart-black-and-white-clipartfest-3.png" width="50%">
+{#<h1 class="pay p-4 ">Book your Ticket</h1>#}
+{#  <div class="row border-primary" >#}
+{#    <article class="card fl-left ">#}
+{#      <section class="date">#}
+{#        <time datetime="23th feb">#}
+{#          <span>{{ route.route_date }}</span>#}
+{#            <span></span>#}
+{#        </time>#}
+{#      </section>#}
+{#      <section class="card-cont">#}
+{#        <small>Bus Ticket</small>#}
+{#        <h3> Super Luxury - {{ route }} - {{ route.start_location }} - {{ route.end_location }} </h3>#}
+{#        <div class="even-date">#}
+{#         <i class="fa fa-calendar"></i>#}
+{#         <time>#}
+{#           <span>Date: {{ route.route_date }}</span>#}
+{#           <span>Time of the bus: {{ route.route_time }}</span>#}
+{#         </time>#}
+{#        </div>#}
+{#        <div class="even-info">#}
+{#          <i class="fa fa-map-marker"></i>#}
+{#          <p>#}
+{#            This ticket issued for  Rote NO {{ route.route_no }}, {{ route.start_location }} to {{ route.end_location }} and#}
+{#              <span>This ticket is valid for only 3 days</span>#}
+{#          </p>#}
+{#        </div>#}
+{#        <a  href="#">Pay Now</a>#}
+{#      </section>#}
+{#    </article>#}
+{#  </div>#}
+</section>
+</div>
+{#<form method="post" action="{% url 'booking' route.route_id %}">#}
+{#{% csrf_token %}#}
+
+<!-- ******************************************************************************************************************* -->
+
+<div class="container">
+
+<form method="post" action="{% url 'booking' route.route_id %}">
+    {% csrf_token %}
+
+            <table class="table table-bordered border-primary mt-2 text-center">
+            <tr>
+                <td rowspan="3" style="width:200px; vertical-align: middle;" class="bg-warning" >Driver</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;" class="green-glow seat" data-seat="1" id="1"> <img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 01 </td>
+                <td style="width:100px; height: 70px; vertical-align: middle;" class="green-glow seat" data-seat="4" id="4"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 04</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;" class="green-glow seat" data-seat="9" id="9"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 09</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;" class="green-glow seat" data-seat="14" id="14"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 14</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;" class="green-glow seat" data-seat="19" id="19"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 19</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;" class="green-glow seat" data-seat="24" id="24"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 24</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;" class="green-glow seat" data-seat="29" id="29"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 29</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;" class="green-glow seat" data-seat="34" id="34"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 34</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;" class="green-glow seat" data-seat="39" id="39"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 39</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;" class="green-glow seat" data-seat="44" id="44"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 44</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;" class="green-glow seat" data-seat="47" id="47"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 47</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;" class="green-glow seat" data-seat="50" id="50"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 50</td>
+
+
+            </tr>
+            <tr>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="2" id="2"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 02</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="5" id="5"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 05</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="10" id="10"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 10</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="15" id="15"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 15</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="20" id="20"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 20</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="25" id="25"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 25</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="30" id="30"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 30</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="35" id="35"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 35</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="40" id="40"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 40</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="45" id="45"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 45</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="48" id="48"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 48</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="51" id="51"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 51</td>
+
+            </tr>
+            <tr>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="3" id="3"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 03</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="6" id="6"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 06</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="11" id="11"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 11</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="16" id="16"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 16</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="21" id="21"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 21</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="26" id="26"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 26</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="31" id="31"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 31</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="36" id="36"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 36</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="41" id="41"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 41</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="46" id="46"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 46</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="49" id="49"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 49</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="52" id="52"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 52</td>
+
+            </tr>
+            <tr>
+                <td style="width:100px; height: 70px; vertical-align: middle;"></td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"></td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"></td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"></td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"></td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"></td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"></td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"></td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"></td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"></td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"></td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"></td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="53" id="53"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 53</td>
+
+            </tr>
+            <tr>
+                <td rowspan="2" style="width:200px; vertical-align: middle;" >Front Door</td>
+                <td style="width:100px; height: 70px; vertical-align: middle; background-color: #b52ba3;" class=""></td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="7" id="7"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 07</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="12" id="12"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 12</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="17" id="17"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 17</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="22" id="22"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 22</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="27" id="27"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 27</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="32" id="32"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 32</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="37" id="37"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 37</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="42" id="42"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 42</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;" colspan="2" rowspan="2"> Back Door</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="54" id="54"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 54</td>
+            </tr>
+            <tr>
+
+                <td style="width:100px; height: 70px; vertical-align: middle; background-color: #b52ba3;"class=""></td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="8" id="8"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 08</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="13" id="13"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 13</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="18" id="18"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 18</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="23" id="23"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 23</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="28" id="28"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 28</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="33" id="33"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 33</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="38" id="38"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 38</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="43" id="43"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 43</td>
+                <td style="width:100px; height: 70px; vertical-align: middle;"class="green-glow seat" data-seat="55" id="55"><img src="{% static 'images/seat.png'%}" style="width:50px;" alt=""> <br> 55</td>
+            </tr>
+
+          </table>
+
+            <div class="container text-center align-items-center pt-4 pb-4" >
+                <table  class="align-items-center" >
+                    <tr class="raw">
+                        <td class="col-3 bg-warning text-white">Driver</td>
+                        <td class="col-2 text-white" style="background-color: #800080;" >Selected</td>
+                        <td class="col-2 text-white bg-danger">Already booked</td>
+                        <td class="col-2 text-white" style="background-color: #b52ba3;">Locked</td>
+                        <td class="col-3 text-white" style="background-color: #689f38;">Available</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="text-center">
+              <div class="control">
+                  {{ form.seat }}
+              </div>
+
+            {% for error in form.seat.errors %}
+                <p class="help text-danger help-text justify-content-start" style="font-size: 13px">{{ error }}</p>
+            {% endfor %}
+
+            </div>
+<section class="vh-100">
+  <div class="container-fluid h-custom">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-9 col-lg-6 col-xl-5">
+          <img src="https://img.freepik.com/premium-vector/bus-station-with-vehicle-waiting-passengers-cartoon_81534-1487.jpg"
+          class="img-fluid w-100" alt="Sample image">
+      </div>
+      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+{#        <form >#}
+          <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+            <p class="lead fw-normal mb-0 me-3 align-items-center justify-content-center text-center">Book with us
+            <span class="display-5 text-center text-decoration-underline">QuickBooking.lk</span> </p>
+{#            <button type="button" class="btn btn-primary btn-floating mx-1">#}
+{#              <i class="bi bi-chat"></i>#}
+{#            </button>#}
+{##}
+{#            <button type="button" class="btn btn-primary btn-floating mx-1">#}
+{#            <i class="bi bi-credit-card-2-back"></i>#}
+{#            </button>#}
+{##}
+{#            <button type="button" class="btn btn-primary btn-floating mx-1">#}
+{#            <i class="bi bi-person-circle"></i>#}
+{#            </button>#}
+          </div>
+
+          <div class="divider d-flex align-items-center my-4">
+            <p class="text-center fw-bold mx-3 mb-0">- O -</p>
+          </div>
+
+          <!-- Email input -->
+          <div class="form-outline mb-4">
+            <label class="form-label" for="nic">National Identity Card No</label>
+              <div class="control">
+                  {{ form.nic }}
+              </div>
+              {% for error in form.nic.errors %}
+                  <p class="help text-danger  help-text ml-3" style="font-size: 13px">{{ error }}</p>
+              {% endfor %}
+          </div>
+
+          <!-- Password input -->
+          <div class="form-outline mb-3">
+              <label class="form-label" for="form3Example4">Enter your valid email address</label>
+                <div class="control">
+                    {{ form.emailaddr }}
+                </div>
+                {% for error in form.emailaddr.errors %}
+                   <p class="help text-danger help-text ml-3" style="font-size: 13px">{{ error }}</p>
+                {% endfor %}
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="form-check mb-0">
+                {{ form.agreement }}
+              <label class="form-check-label" for="agree">QuickBooking.lk <a href="#"> privacy policy </a> and <a href="#">terms and conditions</a></label>
+                 {% for error in form.agreement.errors %}
+                   <p class="help text-danger help-text justify-content-start" style="font-size: 13px">{{ error }}</p>
+                {% endfor %}
+            </div>
+          </div>
+
+          <div class="text-center text-lg-start mt-4 pt-2">
+            <button type="submit" class="btn btn-primary btn-lg cmbtn" data-toggle="modal" data-target=""
+              style="padding-left: 2.5rem; padding-right: 2.5rem;">Confirm</button>
+            <p class="small fw-bold mt-2 pt-1 mb-0 text-center"> <a href="{%  url 'index' %}" class="link-primary text-decoration-none"> QuickBooking.lk </a> Make your life easy.</p>
+          </div>
+
+                      <!-- Modal ******************************************************************************************* -->
+                <div class="modal fade" id="reservationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Confirm your information</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="row">
+                              <div class="col">
+                                  <div class="modal-body">
+                                      <div class="text-center">
+                                          <p class="d-none text-danger" id="model-warning"> There is nothing to show, fill the form. </p>
+                                      </div>
+                                <p>You have selected seat: <span class="seat_l"></span></p>
+                                <p>your NIC: <span class="" id="user_id"></span> </p>
+                                <p>your Email Address: <span id="eml_addr"></span></p>
+                                </div>
+                                  <div class="col">
+                                        <div> <img src="https://thumbs.dreamstime.com/b/mobile-176320885.jpg" width="200px" alt="picture of a bus"> </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-primary submit"> Make Payment </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+      </div>
+    </div>
+
+
+  </div>
+</section>
+
+  </form>
+
+  </div>
+
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js2/seat_select.js' %}"> </script>
+{% endblock %}

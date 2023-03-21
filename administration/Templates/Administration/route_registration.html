@@ -1,0 +1,158 @@
+{% extends 'Administration/base.html' %}
+
+{% load static %}
+
+{% block title %}
+{% endblock %}
+
+{% block link %}
+{% endblock %}
+
+{% block main %}
+    <div class="main-panel">
+
+
+    <div class="container-scroller">
+      <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="content-wrapper d-flex align-items-center auth">
+          <div class="row flex-grow">
+            <div class="col-lg-5 mx-auto">
+              <div class="auth-form-light text-left p-5 border-top border-4 border-dark">
+                <div class="brand-logo">
+                    <div class="col">
+                        <p class="display-3">Register Routes</p>
+                    </div>
+                    <div class="col text-end">
+                        <p> <img  src="https://t3.ftcdn.net/jpg/02/16/31/62/360_F_216316293_2Fn0vpWVzP6k7vPG6yY3wmSgobADmsUe.jpg"> </p>
+                    </div>
+                </div>
+
+                <h6 class="font-weight-light">Please fill this form</h6>
+                   <div class="card mt-4">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                             </div>
+                         {% endfor %}
+                    {% endif %}
+
+
+
+                    <form class="forms-sample" method="post" action="{%  url 'route registration' %}">
+                 {% csrf_token %}
+
+                    <div class="form-group">
+{#                        <input type="text" class="form-control" id="exampleInputName1" placeholder="Name">#}
+                          {{ routeform.plate_no }}
+                        <p style="font-size: 13px;"> Select the particular bus you want to add routes.</p>
+                          {% for error in routeform.plate_no.errors %}
+                                <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 13px;">{{ error }}</p>
+                          {% endfor %}
+                      </div>
+
+             <div class="form-group">
+                        <label for="exampleInputCity1"></label>
+                          {{ routeform.route_no }}
+                            <p style="font-size: 13px;"> please enter the route number of the bus.</p>
+                            {% for error in routeform.route_no.errors %}
+                                <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 13px;">{{ error }}</p>
+                          {% endfor %}
+
+                      </div>
+
+                      <div class="form-group">
+                          <div class="row">
+                              <div class="col">
+                                     {{ routeform.start_location }}
+                                  <p style="font-size: 13px;"> Please enter Departure location.</p>
+                                    {% for error in routeform.start_location.errors %}
+                                        <p class="help text-danger text-capitalize h6 " style="font-size: 13px;">{{ error }}</p>
+                                     {% endfor %}
+                              </div>
+                              <div class="col">
+                                    {{ routeform.end_location }}
+                                  <p style="font-size: 13px;"> Please enter Arrival location.</p>
+                                    {% for error in routeform.end_location.errors %}
+                                        <p class="help text-danger text-capitalize h6 " style="font-size: 13px;">{{ error }}</p>
+                                    {% endfor %}
+                              </div>
+                          </div>
+                      </div>
+
+                <div class="form-group">
+
+                          {{ routeform.route_date }}
+{#                            <input type="date" class="form-control" id="exampleInputName1" name="route_date" placeholder="Name">#}
+                        <p style="font-size: 13px;"> Please enter Departure Date.</p>
+                            {% for error in routeform.route_date.errors %}
+                                <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 13px;">{{ error }}</p>
+                            {% endfor %}
+                      </div>
+
+                      <div class="form-group">
+
+                          {{ routeform.route_time }}
+                          <p style="font-size: 13px;"> Please enter Departure Time.</p>
+                            {% for error in routeform.route_time.errors %}
+                                <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 13px;">{{ error }}</p>
+                            {% endfor %}
+                      </div>
+
+                        <div class="form-group">
+                          {{ routeform.total_distance }}
+                            <p style="font-size: 13px;"> Please enter Total distance of the route. (Enter without KM. Ex: 1 or 1.5)</p>
+                            {% for error in routeform.total_distance.errors %}
+                                <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 13px;">{{ error }}</p>
+                          {% endfor %}
+                      </div>
+{#                        <div class="form-group">#}
+{##}
+{#                          {{ routeform.avg_run_time }}#}
+{#                            <p style="font-size: 13px;"> Please enter average run time.</p>#}
+{#                            {% for error in routeform.avg_run_time.errors %}#}
+{#                                <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 13px;">{{ error }}</p>#}
+{#                          {% endfor %}#}
+{#                      </div>#}
+                        <div class="form-group">
+
+                          {{ routeform.route_status }}
+                            <p style="font-size: 13px;"> Please select whether route available or not.</p>
+                            {% for error in routeform.route_status.errors %}
+                                <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 13px;">{{ error }}</p>
+                          {% endfor %}
+                      </div>
+{#                    <div class="form-group">#}
+{#                            <p style="font-size: 13px;">{{ routeform.route_available }} Put Yes if you want to add this route for a week.</p>#}
+{#                            {% for error in routeform.route_available.errors %}#}
+{#                                <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 13px;">{{ error }}</p>#}
+{#                          {% endfor %}#}
+{#                      </div>#}
+
+
+                        <div class="col text-end ">
+{#                      <button class="btn btn-light me-2 mr-5">Cancel</button>#}
+{#                      <button class="btn btn-light">Cancel</button>#}
+                      <button type="submit" class="btn btn-gradient-primary me-2">Register route</button>
+                          </div>
+                        <div class="text-center pt-3">
+                         <label class="form-check-label pt-3 text-center" for="agree" style="font-size: 13px;">QuickBooking.lk <a href="#"> privacy policy </a> and <a href="#">terms and conditions</a></label>
+                        </div>
+                    </form>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+</div>
+
+
+
+
+{% endblock %}
+
+{% block js %}
+{% endblock %}

@@ -1,0 +1,212 @@
+{% extends 'Administration/base.html' %}
+{% block Title %}
+    Bus and Route Updates
+{% endblock %}
+{% load  static %}
+{% block link %}
+
+     <link rel="stylesheet" href="{% static 'style/card_style.css' %}">
+    <script>
+ window.setTimeout(function() {
+        $(".alert").fadeTo(500, 0).slideUp(500, function(){
+            $(this).remove();
+        });
+    }, 1000);
+
+    $(document).ready(function () {
+        $('.del').click(function() {
+          const buttonId = $(this).attr('id');
+          console.log(buttonId);
+          $('#del_bus').val(buttonId)
+          $('#bus_id').html(buttonId)
+        });
+    })
+    </script>
+{% endblock %}
+
+{% block main %}
+
+              <div class="col grid-margin stretch-card">
+
+                <div class="card">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-success" role="alert">
+                                <span aria-hidden="true"><i class="bi bi-check2-circle"></i></span>
+                                {{ message }}
+                            </div>
+                         {% endfor %}
+                    {% endif %}
+
+                  <div class="card-body">
+                    <div class="container">
+                                <div class="row">
+                                    <div class="col-md-4 col-xl-3">
+                                        <div class="card bg-c-blue order-card">
+{#                                            <div class="card-block">#}
+{#                                                <h6 class="m-b-20  text-center">Total Buses</h6>#}
+{#                                                <h2 class="text-center m-b-0"><i class="fa fa-cart-plus f-left"></i><span>{{ total_b}}</span></h2>#}
+{#                                                <p class="m-b-0 text-center">Shows the Total bus in the system.</p>#}
+{#                                            </div>#}
+                                            <div class="card-block">
+                                                <h6 class="m-b-20 text-center">Total Buses</h6>
+                                                <h2 class="text-right text-center"><i class="fa fa-rocket f-left"></i><span>{{ total_b }}</span></h2>
+                                                <p class="m-b-0 text-center">Shows the total buses in the system.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-xl-3">
+                                        <div class="card bg-c-green order-card">
+                                            <div class="card-block">
+                                                <h6 class="m-b-20 text-center">Total Routes</h6>
+                                                <h2 class="text-right text-center"><i class="fa fa-rocket f-left"></i><span>{{ total_route }}</span></h2>
+                                                <p class="m-b-0 text-center">Shows the total routes of the system.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-xl-3">
+                                        <div class="card bg-c-yellow order-card">
+                                            <div class="card-block">
+                                                <h6 class="m-b-20 text-center">Available Bus</h6>
+                                                <h2 class="text-right text-center"><i class="fa fa-refresh f-left"></i><span>{{ available }}</span></h2>
+                                                <p class="m-b-0 text-center">Shows the Available bus in the system.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-xl-3">
+                                        <div class="card bg-c-pink order-card">
+                                            <div class="card-block">
+                                                <h6 class="m-b-20 text-center">Not Available Bus</h6>
+                                                <h2 class="text-right text-center"><i class="fa fa-credit-card f-left"></i><span>{{ not_available_bus }}</span></h2>
+                                                <p class="m-b-0 text-center">Shows the Available Routes in the system.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <ul class="nav justify-content-end m-5">
+                            <li class="nav-item">
+                            <h4 class="nav-link active" aria-current="page" href="#">Filter By</h4>
+                          </li>
+                            <li class="nav-item">
+                            <a class="nav-link " aria-current="page" href="{% url 'bus and route update' %}">All</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link " aria-current="page" href="?bus_status=1">Available</a>
+                          </li>
+                            <li class="nav-item">
+                            <a class="nav-link " aria-current="page" href="?bus_status=0">Not Available</a>
+                          </li>
+
+{#                            <li class="nav-item">#}
+{#                            <a class="nav-link " aria-current="page" href="?ticket_pending=2">Delete</a>#}
+{#                          </li>#}
+{#                            <li class="nav-item">#}
+{#                            <a class="nav-link " aria-current="page" href="?ticket_pending=3">Reviewed</a>#}
+{#                          </li>#}
+{#                          <li class="nav-item">#}
+{#                            <a class="nav-link" href="#">Alphabetic order</a>#}
+{#                          </li>#}
+                        </ul>
+                     <form class="d-flex m-5" method="post" action="{% url 'bus and route update' %}">
+                         {% csrf_token %}
+{#                          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">#}
+                            {{ bus_Reg_from.search_from }}
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                     </form>
+                    <h4 class="card-title">Bus Details</h4>
+
+
+                    <table class="table table-hover table-striped">
+                      <thead>
+                        <tr>
+                          <th scope="col">Number plate</th>
+                          <th scope="col">Vehicle Status</th>
+                          <th scope="col">Driver Name</th>
+                          <th scope="col">Seat</th>
+                          <th scope="col">Associated Accounts</th>
+                           <th scope="col">Reg Date</th>
+                           <th scope="col">All Routes</th>
+                           <th scope="col">Edit</th>
+                           <th scope="col">Delete</th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                      {%  for bus in all_buses %}
+                        <tr>
+                          <td>
+                              <img src="https://simg.nicepng.com/png/small/121-1215908_cartoon-bus-stop-cartoon-public-bus-png.png" class="me-2" alt="image"> {{ bus.bus_plate_no }}
+                          </td>
+                          <td>
+                              {% if bus.vehicle_status == True %}
+                                  Available
+                              {% else %}
+                                  Not Available
+                              {% endif %}
+                          </td>
+
+                          <td>{{bus.driver_name}}</td>
+                          <td> {{bus.no_of_seat}}</td>
+                          <td> {{ bus.userName.username }} </td>
+                          <td> {{ bus.register_date }} </td>
+
+                            <td class="text-center">
+                                 <a type="button" href="{% url 'view bus routes' bus.bus_plate_no %}" class="btn btn-outline-primary btn-sm align-center"  id="{{ bus.bus_plate_no }}">View</a>
+{#                                 <button type="button" class="btn btn-outline-primary btn-sm align-center"  id="{{ feed_back.feed_back_id }}">View</button>#}
+                            </td>
+{#                            <td> <button class="btn-sm bg-primary text-white" type="button" id="{{ feed_back.feed_back_id }}" style=""> View </button> </td>#}
+                            <td> <a class="btn btn-outline-warning btn-sm align-center" href="{% url 'update bus' bus.bus_plate_no %}" id="{{ bus.bus_plate_no}}" style=""> Edit </a> </td>
+{#                            <td> <a class="btn btn-outline-danger btn-sm align-center" href="" id="{{ bus.bus_plate_no}}" style=""> Delete </a> #}
+                            <td>
+                            <button type="button" class="btn btn-outline-danger btn-sm align-center del" data-toggle="modal" data-target="#delete" id="{{ bus.bus_plate_no}}">Delete</button>
+
+                            </td>
+
+                        </tr>
+
+                      {% endfor %}
+
+                      </tbody>
+                    </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-sm">
+                        <div class="modal-content m-5 p-2">
+                            <form method="post" action="{% url 'del bus' %}">
+                                {% csrf_token %}
+                                <p class="display-1 text-center"><i class="bi bi-x-octagon text-danger"></i></p>
+                                <p class="h4 text-center display-4">Are you sure?  </p>
+                                <p class="h6 small text-center" style="color: #C1C1C1;">Do you Really want to delete this records? <span id="bus_id"> </span> <br> This process can't be undone. <span id="bus_id"> </span> </p>
+                                <div class="row">
+{#                                <input name="del_val" type="hidden">#}
+                                    {{ bus_del.del_bus }}
+                                    <div class="col-6">
+                                    <button name="sub" type="submit" class="btn btn-outline-danger">Delete</button>
+
+                                </div>
+                                <div class="col-6">
+                                    <button name="cancel" type="button"  data-dismiss="modal" class="btn btn-outline-primary">Cancel</button>
+                                </div>
+                                </div>
+                            </form>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

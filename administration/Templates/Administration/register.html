@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      {% load static %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>QuickBooking user registration</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="{% static 'vendors/mdi/css/materialdesignicons.min.css '%}">
+    <link rel="stylesheet" href="{% static 'vendors/css/vendor.bundle.base.css' %}">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" >
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+      <style>
+
+
+      </style>
+      <script>
+          $(document).ready(function () {
+              $(".anima").click(function () {
+                {#$(".mail_form").hide()#}
+                $("#visble").addClass('d-none')
+                {#$(".load-animation").show()#}
+                 $(".load-animation").removeClass('d-none')/*
+
+                 const username = $('#id_username').val()
+                 const email = $('#id_email').val()
+                 const pass1 = $('#id_password1').val()
+                 const pass2 = $('#id_password2').val()
+
+                  console.log(username)
+                  console.log(email)
+                  if (username === '' || email === ''){
+                      $(".load-animation").removeClass('d-none')
+                  }
+                  else {
+                      $(".load-animation").addClass('d-none')
+                      $("#visble").removeClass('d-none')
+                  }*/
+            })
+          })
+      </script>
+  </head>
+  <body>
+    <div class="container-scroller">
+      <div class="container-fluid page-body-wrapper full-page-wrapper">
+
+        <div class="content-wrapper d-flex align-items-center auth " >
+
+          <div class="row flex-grow">
+            <div class="col-lg-4 mx-auto">
+              <div class="auth-form-light text-left p-5 " id="visble">
+                  <h2>QuickBooking Administration</h2>
+
+                <h4>User Registration</h4>
+{#                  {% if  messages %}#}
+{#                        {% for message in messages %}#}
+{#                            <div class="alert alert-danger alert-dismissible fade show" role="alert">#}
+{#                                {{ message }}#}
+{#                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>#}
+{#                             </div>#}
+{#                         {% endfor %}#}
+{#                    {% endif %}#}
+                <h6 class="font-weight-light">You can register drivers here</h6>
+                <form class="pt-3 " action="{% url 'register' %}" method="post">
+                    {% csrf_token %}
+                  <div class="form-group">
+		            {{ register_form.username}}
+                      <p>Require 150 characters or fewer. Letters, digits and @/./+/-/_ only.</p>
+                       {% for error in register_form.username.errors %}
+                                <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 13px;">{{ error }}</p>
+                          {% endfor %}
+                  </div>
+                    <div class="form-group">
+		            {{ register_form.email }}
+                        <p>Please enter your email address</p>
+                        {% for error in register_form.email.errors %}
+                                <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 13px;">{{ error }}</p>
+                          {% endfor %}
+                  </div>
+                    <div class="form-group">
+		            {{ register_form.password1 }}
+                        <p>Please enter your password</p>
+                        {% for error in register_form.password1.errors %}
+                                <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 13px;">{{ error }}</p>
+                          {% endfor %}
+                  </div>
+                    <div class="form-group">
+		            {{ register_form.password2 }}
+                        <p>Please Re type your password</p>
+                        {% for error in register_form.password2.errors %}
+                                <p class="help text-danger text-capitalize h6 mt-1" style="font-size: 13px;">{{ error }}</p>
+                          {% endfor %}
+                  </div>
+                  <div class="form-group">
+                  <div class="mt-3">
+<!--                    <a class="p-5 " href="{% url 'adminDashboard' %}" >Back to the Dashboard</a>-->
+                    <button class="btn  btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn anima" type="submit">Register</button>
+                  </div>
+
+                  <div class="text-center mt-4 font-weight-light"> Go back to the <a href="{% url 'adminDashboard' %}" class="text-primary">QuickBooking.lk</a>
+                  </div>
+                  </div>
+                </form>
+              </div>
+
+            <div class="bg-white p-5 load-animation d-none" style="width: 500px; height: 500px; text-align: center;margin: auto">
+                        <div style=" text-align: center">
+                            <img src="https://cdn.dribbble.com/users/988448/screenshots/5240042/icon_cadastro_v5.gif" style="height: 200px; width: 300px">
+                        </div>
+
+                        <div class="">
+                        <div style="text-align: center">
+                            <img src="https://i.pinimg.com/originals/24/07/b5/2407b512f6f2eec61cd2f3136242a025.gif" style="height: 180px; width: 280px">
+                            <p class="display-5">Processing...</p>
+
+                        </div>
+
+            </div>
+
+          </div>
+        </div>
+
+
+        <!-- content-wrapper e
+        nds -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="{% static  'vendors/js/vendor.bundle.base.js' %}"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="{%  static 'js/off-canvas.js' %}"></script>
+    <script src="{%  static 'js/hoverable-collapse.js' %}"></script>
+    <script src="{%  static 'js/misc.js' %}"></script>
+    <!-- endinject -->
+  </body>
+</html>
