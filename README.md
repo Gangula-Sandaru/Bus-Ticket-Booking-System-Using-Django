@@ -20,7 +20,10 @@ day today works. So we can take this situation as a turning point to our life. I
 future and we can take this irregular system as a new cleanser to all people’s mindset as well as
 the thinking pattern. Nowadays everyone are so busy with their day to day works. They need best
 services and satisfaction in every ways. But there are no ways no system changes to have a better
-one. 
+one. Peoples get so tired and feeling unsatisfied with the society to get good service.so we can
+recommend and plan new ways to have system change. Basically everyone needs foods,
+transport, cloths, Residence according to these human needs. We can recommend new transport
+system to society
 
 # 3. Software tool and technologies Requirement
 * Wamp server
