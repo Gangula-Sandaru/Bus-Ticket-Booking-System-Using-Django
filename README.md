@@ -16,3 +16,7 @@ time. Because passengers do not know the correct destination
 * MySQL
 * JavaScript ,HTML, CSS
 * Python – Django Framework
+* API – (Application Programming Interface)
+* Normalize.css
+* Photoshop
+* Bootstrap
