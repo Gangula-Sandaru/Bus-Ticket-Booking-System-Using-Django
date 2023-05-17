@@ -12,3 +12,7 @@ Another reason for creating this website is to avoid unnecessary wastage of pass
 time. Because passengers do not know the correct destination
 
 # Software tool and technologies Requirement
+* Wamp server
+* MySQL
+* JavaScript ,HTML, CSS
+* Python – Django Framework
