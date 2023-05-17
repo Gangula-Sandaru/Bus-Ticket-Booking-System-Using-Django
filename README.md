@@ -11,7 +11,12 @@ online. The money related to the tickets has been facilitated to be paid through
 Another reason for creating this website is to avoid unnecessary wastage of passenger’s valuable
 time. Because passengers do not know the correct destination
 
-# Software tool and technologies Requirement
+# 2. Problem in Brief
+Transport is an essential thing to every human being. So is there any good service in public
+transport? It is a big problem to everyone. Because public transport is very common to everyone
+and it should be service to everyone.
+
+# 3. Software tool and technologies Requirement
 * Wamp server
 * MySQL
 * JavaScript ,HTML, CSS
