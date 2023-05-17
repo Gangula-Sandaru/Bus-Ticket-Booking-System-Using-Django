@@ -8,3 +8,4 @@ register on our website and select the buses (private) required for their journe
 exact arrival and departure times of the buses by using the bus timetable. Also, the distance and
 route available for the journey can be obtained using the road map. Users can book bus tickets
 online. The money related to the tickets has been facilitated to be paid through the online.
+Another reason for creating this website is to avoid unnecessary wastage of passenger’s valuable
