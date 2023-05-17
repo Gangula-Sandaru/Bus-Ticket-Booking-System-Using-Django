@@ -15,7 +15,12 @@ time. Because passengers do not know the correct destination
 Transport is an essential thing to every human being. So is there any good service in public
 transport? It is a big problem to everyone. Because public transport is very common to everyone
 and it should be service to everyone.  Under this irregular system effects all the states of peoples
-in society. Example of food, fuel, Attended on time transport, business, 
+in society. Example of food, fuel, Attended on time transport, business, school students and the
+day today works. So we can take this situation as a turning point to our life. It will help for better
+future and we can take this irregular system as a new cleanser to all people’s mindset as well as
+the thinking pattern. Nowadays everyone are so busy with their day to day works. They need best
+services and satisfaction in every ways. But there are no ways no system changes to have a better
+one. 
 
 # 3. Software tool and technologies Requirement
 * Wamp server
