@@ -26,7 +26,10 @@ transport, cloths, Residence according to these human needs. We can recommend ne
 system to society.
 
 We are introduce book a tickets online through the website, After booking a ticket system will
-provide the QR code to the user. QR codes It’s may help to save time, attended on time
+provide the QR code to the user. QR codes It’s may help to save time, attended on time.
+
+When we use public transport, we miss the bus roots and seats. Introducing our website we can
+solve this problem too
 
 # 3. Software tool and technologies Requirement
 * Wamp server
