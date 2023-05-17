@@ -14,7 +14,8 @@ time. Because passengers do not know the correct destination
 # 2. Problem in Brief
 Transport is an essential thing to every human being. So is there any good service in public
 transport? It is a big problem to everyone. Because public transport is very common to everyone
-and it should be service to everyone.
+and it should be service to everyone.  Under this irregular system effects all the states of peoples
+in society. Example of food, fuel, Attended on time transport, business, 
 
 # 3. Software tool and technologies Requirement
 * Wamp server
