@@ -23,7 +23,10 @@ services and satisfaction in every ways. But there are no ways no system changes
 one. Peoples get so tired and feeling unsatisfied with the society to get good service.so we can
 recommend and plan new ways to have system change. Basically everyone needs foods,
 transport, cloths, Residence according to these human needs. We can recommend new transport
-system to society
+system to society.
+
+We are introduce book a tickets online through the website, After booking a ticket system will
+provide the QR code to the user. QR codes It’s may help to save time, attended on time
 
 # 3. Software tool and technologies Requirement
 * Wamp server
