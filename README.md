@@ -9,3 +9,4 @@ exact arrival and departure times of the buses by using the bus timetable. Also,
 route available for the journey can be obtained using the road map. Users can book bus tickets
 online. The money related to the tickets has been facilitated to be paid through the online.
 Another reason for creating this website is to avoid unnecessary wastage of passenger’s valuable
+time. Because passengers do not know the correct destination
